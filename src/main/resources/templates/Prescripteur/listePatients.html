@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" http-equiv="Content-Type" content="text/html">
+    <title>Liste de tous les patients</title>
+    <link rel="icon" type="image/png" href="images/favicon-air-sante.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.css">-->
+    <link rel="stylesheet" type="text/css" media="all" href="../css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/knacss.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/styles.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/tables.css" media="all">
+
+    <script src="../js/jquery-min.js"></script>
+    <script src="../js/jquery.sequence-min.js"></script>
+
+    <script type="text/javascript" src="../js/jquery.flot.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.flot.time.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.flot.pie.min.js"></script>
+
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="../js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="../js/ckeditor/ckeditor.js"></script>
+
+
+</head>
+<body class="design4">
+<div id="bandeau-noir-haut" class="bandeau-noir">
+    <div th:replace="fragments/navbar :: navbar">
+    </div>
+</div>
+<div class="container">
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+    <h1>Liste de vos patients</h1>
+
+    <p>Vous avez <span th:text="${#lists.size(listPatientsPrescripteur)}"> patients actifs.</span></p>
+
+    <div style="cursor: pointer;" id="patient-grid" class="grid-view">
+
+        <table class="items" id="listPatients">
+            <thead>
+            <tr>
+                <td>Nom</td>
+                <td>Prénom</td>
+                <td>Ville</td>
+                <td>Numéro sécurité sociale</td>
+                <td>Date d'installation</td>
+                <td>Dernière intervention</td>
+                <td>Prochaine intervention</td>
+                <td>Statut du dossier</td>
+                <td>Observance moyenne</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="patient, status : ${listPatientsPrescripteur}"
+                th:class="${status.odd} ? 'odd' : 'even'">
+                <td th:text="${patient.nom}">Nom</td>
+                <td th:text="${patient.prenom}">Prénom</td>
+                <td th:text="${patient.ville}">Ville</td>
+                <td th:text="${patient.numeroSecu}">Numéro Sécu</td>
+                <td th:text="${patient.dateInstallation != null} ? ${#dates.format(patient.dateInstallation, 'dd MMMMM yyyy')}">Date d'installation</td>
+                <td th:text="${patient.dateDerniereInter != null} ? ${#dates.format(patient.dateDerniereInter, 'dd MMMMM yyyy')}">Date d'installation</td>
+                <td th:text="${patient.dateProchaineInter != null} ? ${#dates.format(patient.dateProchaineInter, 'dd MMMMM yyyy - HH:mm')}">Date d'installation</td>
+                <td th:text="${patient.statutDossier}">Statut du dossier</td>
+                <td th:text="${patient.moyenneMois}">Moyenne en mois</td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+
+
+<div class="footer" th:replace="fragments/footer :: footer">
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#listPatients').DataTable();
+    });
+</script>
+</body>
+</html>

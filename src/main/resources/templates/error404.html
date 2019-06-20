@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <html lang="fr-FR" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="Content-Type" content="text/html"></meta>
+        <title>Airsanté - page non trouvée</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/knacss.css" media="all">
+        <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+        <link rel="icon" type="image/png" href="images/favicon-air-sante.png"/>
+
+        <script src="js/jquery-min.js"></script>
+        <script src="js/jquery.sequence-min.js"></script>
+
+        <script type="text/javascript" src="js/jquery.flot.min.js"></script>
+        <script type="text/javascript" src="js/jquery.flot.time.min.js"></script>
+        <script type="text/javascript" src="js/jquery.flot.pie.min.js"></script>
+
+        <script src="js/ckeditor/ckeditor.js"></script>
+    </head>
+
+<body class="design4">
+<div id="bandeau-noir-haut" class="bandeau-noir">
+    <div th:replace="fragments/navbar :: navbar">
+    </div>
+</div>
+
+<div class="container">
+
+
+    <h4>La page que vous demandez n'existe pas</h4>
+    <a href="index">Retour à l'accueil</a>
+
+</div>
+
+
+<div class="footer" th:replace="fragments/footer :: footer">
+</div>
+</body>
+
+
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Liste des patients</h1>
+
+	<h2 th:text="${personne.nom}">Code postal : </h2>
+	<h3 th:text="${personne.prenom}">Code postal : </h3>
+	<h3 th:text="${personne.adresseByAdresseId.ville}">Code postal : </h3>
+	<h3 th:text="${personne.patientById.getDateProchaineInterv()}">Code postal : </h3>
+
+</body>
+</html>
