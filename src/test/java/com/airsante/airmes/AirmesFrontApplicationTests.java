@@ -282,21 +282,21 @@ public class AirmesFrontApplicationTests extends TestCase {
         /**
          * Test du décryptage en SHA1
          */
-//    @Test
-////    public void matches(CharSequence rawPassword, String encodedPassword) {
-//    public void matches2() {
-//        String rawPassword = "VenT@i3$an734-9airsante";
-//        String encodedPassword ="524df7ddcaa668e2249e24fcd87a79a5b4bb1f04";
-//        try {
-//            String mdpCrypte = DigestUtils.sha1Hex("VenT@i3$an734-9airsante");
-//            System.out.println(mdpCrypte);
-//            assertEquals(encodedPassword, mdpCrypte);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            //return false;
-//        }
-//
-//    }
+    @Test
+//    public void matches(CharSequence rawPassword, String encodedPassword) {
+    public void matches2() {
+        String rawPassword = "VenT@i3$an734-9airsante";
+        String encodedPassword ="524df7ddcaa668e2249e24fcd87a79a5b4bb1f04";
+        try {
+            String mdpCrypte = DigestUtils.sha1Hex("VenT@i3$an734-9airsante");
+            System.out.println(mdpCrypte);
+            assertEquals(encodedPassword, mdpCrypte);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return false;
+        }
+
+    }
 //
 //    /**
 //     * Test de l'encryptage en SHA1
