@@ -173,7 +173,7 @@ public class PatientServiceApi {
      */
     public static Patient findById(long id, String token) {
         RestTemplate restTemplate = new RestTemplate();
-      //  headers.set("Authorization", "Bearer " + token);
+        headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> header = new HttpEntity<String>(headers);
         String total = URL + "patient/" + id + "?projection=inlinePatient";
         Patient patient = restTemplate.exchange(total, HttpMethod.GET, header, Patient.class).getBody();

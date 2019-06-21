@@ -2,6 +2,7 @@ package com.airsante.airmes.controllers;
 
 import com.airsante.airmes.services.AdresseServiceApi;
 import com.airsante.airmes.services.PatientServiceApi;
+import com.airsante.airmes.utils.Token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
+
 /**
  * 
  * @author jerome.vinet
@@ -34,9 +38,9 @@ public class AdresseController {
 	 * @return
 	 */
 	@RequestMapping(value = "adresse/listAdresses", method = RequestMethod.GET)
-	public ModelAndView adresses(ModelAndView modelAndView) {
+	public ModelAndView adresses(ModelAndView modelAndView, HttpSession session) {
 		modelAndView.setViewName(VIEW_LIST_adresses);
-		modelAndView.addObject("adresses", AdresseServiceApi.findAllAdresses());
+		modelAndView.addObject("adresses", AdresseServiceApi.findAllAdresses(Token.getToken(session)));
 		return modelAndView;		
 	}
 
@@ -44,9 +48,9 @@ public class AdresseController {
 	  // -------------------Retrieve Single Adresse------------------------------------------
 	  
 	  @RequestMapping(value = "/adresse/{id}", method = RequestMethod.GET) 
-		public ModelAndView adresseSignle(@PathVariable("id") int id, ModelAndView modelAndView) {
+		public ModelAndView adresseSingle(@PathVariable("id") int id, ModelAndView modelAndView, HttpSession session) {
 			modelAndView.setViewName(VIEW_SINGLE_adresse);
-			modelAndView.addObject("adresse", AdresseServiceApi.findById(id));
+			modelAndView.addObject("adresse", AdresseServiceApi.findById(id, Token.getToken(session)));
 			return modelAndView;		
 		}
 	  

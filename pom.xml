@@ -12,7 +12,7 @@
 
     <groupId>com.airsante.airmes.front</groupId>
     <artifactId>AirmesFront</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>AirmesFront</name>
     <description>Airmes Front</description>
 

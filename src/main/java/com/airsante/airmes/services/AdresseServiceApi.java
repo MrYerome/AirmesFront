@@ -6,7 +6,11 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.airsante.airmes.modelsJson.PatientCustom;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.airsante.airmes.modelsJson.Adresse;
@@ -19,17 +23,18 @@ import org.springframework.hateoas.client.Traverson.TraversalBuilder;
 
 public class AdresseServiceApi {
 
-	public static final String URL_ADRESSE = "http://localhost:8090/api/";
+	public static final String URL = "http://localhost:8090/api/";
 
 	// HttpHeaders
 	static HttpHeaders headers = new HttpHeaders();
 
-	public static Collection<Adresse> findAllAdresses() {
+	public static Collection<Adresse> findAllAdresses(String token) {
 		Collection<Adresse> CollAdresses = new ArrayList<Adresse>();
+		headers.set("Authorization", "Bearer " + token);
 		Traverson traverson;
 		try {
-			traverson = new Traverson(new URI(URL_ADRESSE), MediaTypes.HAL_JSON);
-			TraversalBuilder tb = traverson.follow("adresse");
+			traverson = new Traverson(new URI(URL), MediaTypes.HAL_JSON);
+			TraversalBuilder tb = traverson.follow("adresse").withHeaders(headers);
 			ParameterizedTypeReference<Resources<Adresse>> typeRefDevices = new ParameterizedTypeReference<Resources<Adresse>>() {
 			};
 			Resources<Adresse> resAdresses = tb.toObject(typeRefDevices);
@@ -46,14 +51,15 @@ public class AdresseServiceApi {
 		return CollAdresses;
 	}
 
-	public static Adresse findById(long id) {
-		
-		System.out.println("Testing getUser API----------");
-        RestTemplate restTemplate = new RestTemplate();
-        Adresse adresse = restTemplate.getForObject(URL_ADRESSE+"adresse/"+id, Adresse.class);
-        System.out.println(adresse.toString());
-		
-		
+	public static Adresse findById(long id, String token) {
+		RestTemplate restTemplate = new RestTemplate();
+		headers.set("Authorization", "Bearer " + token);
+		HttpEntity<String> header = new HttpEntity<String>(headers);
+		String total = URL + "adresse/" + id;
+		Adresse adresse = restTemplate.exchange(total, HttpMethod.GET, header, Adresse.class).getBody();
+		System.out.println(adresse.toString());
+		return adresse;
+
 //		System.out.println(id);
 //		Collection<AdresseJson> CollAdresses = new ArrayList<AdresseJson>();
 //		Traverson traverson;	
@@ -84,7 +90,6 @@ public class AdresseServiceApi {
 //			e.printStackTrace();
 //		}
 
-		return adresse;
 	}
 
 	public boolean isAdresseExist(Adresse adresse) {

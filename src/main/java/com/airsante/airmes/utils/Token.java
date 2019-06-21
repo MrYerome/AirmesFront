@@ -3,6 +3,7 @@ package com.airsante.airmes.utils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,5 +79,9 @@ public class Token {
         }
         System.out.println(mytoken);
         return mytoken;
+    }
+
+    public static String getToken(HttpSession session) {
+        return session.getAttribute("token").toString();
     }
 }
