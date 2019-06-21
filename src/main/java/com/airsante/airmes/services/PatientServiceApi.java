@@ -1,10 +1,10 @@
 package com.airsante.airmes.services;
 
-import java.lang.reflect.ParameterizedType;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import com.airsante.airmes.utils.Constantes;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resources;
@@ -15,9 +15,9 @@ import org.springframework.web.client.RestTemplate;
 import com.airsante.airmes.modelsJson.Patient;
 import com.airsante.airmes.modelsJson.PatientCustom;
 
-public class PatientServiceApi {
 
-    final static String URL = "http://localhost:8090/api/";
+public class PatientServiceApi {
+    final static String URL = Constantes.getUrl();
     static HttpHeaders headers = new HttpHeaders();
 
     static Collection<PatientCustom> CollPatients = new ArrayList<PatientCustom>();
@@ -63,11 +63,11 @@ public class PatientServiceApi {
             CollPatients = response.getBody();
 
 			/*
-			  Méthode qui marche très bien, mais qui renvoie un array, donc moins souple qu'une collection		    
+			  Méthode qui marche très bien, mais qui renvoie un array, donc moins souple qu'une collection
 			  ResponseEntity<PatientCustom[]> responseEntity = restTemplate.getForEntity(URL_PATIENT+"customRequests/listeAccueil",
 			  PatientCustom[].class); PatientCustom[] CollPatients = responseEntity.getBody();
 			  MediaType contentType = responseEntity.getHeaders().getContentType();
-			  HttpStatus statusCode = responseEntity.getStatusCode(); 
+			  HttpStatus statusCode = responseEntity.getStatusCode();
 			 */
         } catch (Exception e) {
             e.printStackTrace();
@@ -176,6 +176,7 @@ public class PatientServiceApi {
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> header = new HttpEntity<String>(headers);
         String total = URL + "patient/" + id + "?projection=inlinePatient";
+        System.out.println(URL);
         Patient patient = restTemplate.exchange(total, HttpMethod.GET, header, Patient.class).getBody();
         return patient;
     }

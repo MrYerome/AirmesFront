@@ -69,6 +69,13 @@
             <version>1.1.1</version>
         </dependency>
 
+        <!--Pour gérer les customProperties-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
 
         <dependency>
             <groupId>mysql</groupId>
