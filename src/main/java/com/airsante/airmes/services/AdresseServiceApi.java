@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.airsante.airmes.modelsJson.PatientCustom;
+import com.airsante.airmes.utils.Constantes;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,7 +24,7 @@ import org.springframework.hateoas.client.Traverson.TraversalBuilder;
 
 public class AdresseServiceApi {
 
-	public static final String URL = "http://localhost:8090/api/";
+	final static String URL = Constantes.getUrl();
 
 	// HttpHeaders
 	static HttpHeaders headers = new HttpHeaders();

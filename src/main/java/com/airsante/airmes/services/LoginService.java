@@ -1,6 +1,7 @@
 package com.airsante.airmes.services;
 
 import com.airsante.airmes.modelsJson.User;
+import com.airsante.airmes.utils.Constantes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginService {
-    public static final String URL = "http://localhost:8090/api/";
+    final static String URL = Constantes.getUrl();
     static HttpHeaders headers = new HttpHeaders();
 
 

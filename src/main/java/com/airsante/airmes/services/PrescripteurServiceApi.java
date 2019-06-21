@@ -1,6 +1,7 @@
 package com.airsante.airmes.services;
 
 import com.airsante.airmes.modelsJson.Prescripteur;
+import com.airsante.airmes.utils.Constantes;
 import com.airsante.airmes.utils.StoreSession;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 public class PrescripteurServiceApi {
 
-    final static String URL = "http://localhost:8090/api/";
+    final static String URL = Constantes.getUrl();
     static HttpHeaders headers = new HttpHeaders();
 
     public static Long findByIdentifiant(String identifiant, String token, HttpSession session) {

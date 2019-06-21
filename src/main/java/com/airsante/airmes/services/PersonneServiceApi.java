@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.airsante.airmes.utils.Constantes;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resources;
@@ -17,8 +18,8 @@ import com.airsante.airmes.modelsJson.Personne;
 
 public class PersonneServiceApi {
 
-	
-	public static final String URL_PERSONNE = "http://localhost:8090/api/";
+
+	final static String URL = Constantes.getUrl();
 
 	// HttpHeaders
 	static HttpHeaders headers = new HttpHeaders();
@@ -27,7 +28,7 @@ public class PersonneServiceApi {
 		Collection<Personne> CollPersonnes = new ArrayList<Personne>();
 		Traverson traverson;
 		try {
-			traverson = new Traverson(new URI(URL_PERSONNE), MediaTypes.HAL_JSON);
+			traverson = new Traverson(new URI(URL), MediaTypes.HAL_JSON);
 			TraversalBuilder tb = traverson.follow("personne");
 			ParameterizedTypeReference<Resources<Personne>> typeRefDevices = new ParameterizedTypeReference<Resources<Personne>>() {
 			};
@@ -48,7 +49,7 @@ public class PersonneServiceApi {
 public static Personne findById(long id) {
 		System.out.println("Testing getUser API----------");
         RestTemplate restTemplate = new RestTemplate();
-        Personne personne = restTemplate.getForObject(URL_PERSONNE+"personne/"+id+"?projection=inlinePersonne", Personne.class);
+        Personne personne = restTemplate.getForObject(URL+"personne/"+id+"?projection=inlinePersonne", Personne.class);
 		return personne;
 }
 	
