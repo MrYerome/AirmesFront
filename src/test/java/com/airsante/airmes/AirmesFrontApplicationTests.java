@@ -1,10 +1,10 @@
 package com.airsante.airmes;
 
-import com.airsante.airmes.modelsJson.Patient;
-import com.airsante.airmes.modelsJson.Prescripteur;
-import com.airsante.airmes.modelsJson.User;
-import com.airsante.airmes.services.LoginService;
-import com.airsante.airmes.utils.StoreSession;
+//import com.airsante.airmes.modelsJson.Patient;
+//import com.airsante.airmes.modelsJson.Prescripteur;
+//import com.airsante.airmes.modelsJson.User;
+//import com.airsante.airmes.services.LoginService;
+//import com.airsante.airmes.utils.StoreSession;
 import junit.framework.TestCase;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
