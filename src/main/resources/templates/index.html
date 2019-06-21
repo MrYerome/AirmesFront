@@ -42,24 +42,22 @@
     <div id="listeLiens" sec:authorize="isAuthenticated()">
         <p>Bienvenue dans mon projet front de Spring Boot !</p>
         <p>
+            <a th:href="@{/adresse/listAdresses}">Afficher la liste de toutes les adresses</a>
             <a href="/adresse/listAdresses">Afficher la liste de toutes les adresses</a><br>
         </p>
-        <a href="/adresse/25">Afficher l'adresse 25</a>
+        <a th:href="@{/adresse/25}">Afficher l'adresse 25</a>
         <p>
-            <a href="/patient/listPatients">Afficher la liste des patients</a>
+            <a th:href="@{/patient/listPatients}">Afficher la liste des patients</a>
         </p>
         <p>
-            <a href="/patient/191">Afficher le patient 191</a>
+            <a th:href="@{/patient/191}">Afficher le patient 191</a>
         </p>
         <p>
-            <a href="/patient/listCustomPatients">Afficher la liste des customPatients</a>
+            <a th:href="@{/patient/listCustomPatients}">Afficher la liste des customPatients</a>
         </p>
+
         <p>
-            <a th:href="@{/personne/listPersonnes}"></a>
-            <!--<a href="/personne/listPersonnes">Afficher la liste des personnes</a>-->
-        </p>
-        <p>
-            <a href="/admin/indexAdmin">Espace réservé aux admins</a>
+            <a th:href="@{/admin/indexAdmin}">Espace réservé aux admins</a>
         </p>
 
     </div>
