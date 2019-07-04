@@ -8,222 +8,212 @@
     </div>
 </div>
 <div id="page" class="line page design4">
-<div id="menu_prescripteur">
-    <div style="float: right; width: 10%;">
-        <!--<a class="bouton_deconnexion" th:action="@{/logout}" title="Déconnexion"  href="/logout"></a></div>-->
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Se déconnecter"/>
-        </form>
+    <div id="menu_prescripteur">
+        <div style="float: right; width: 10%;">
+            <!--<a class="bouton_deconnexion" th:action="@{/logout}" title="Déconnexion"  href="/logout"></a></div>-->
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Se déconnecter"/>
+            </form>
 
 
-
-
+        </div>
+        <div class="grid" style="width: 90%">
+            <ul class="grid4" id="yw4">
+                <li class="menu_prescripteur_accueil active"><a href="/index.php?r=prescripteur/accueil">Espace
+                    prescripteur</a></li>
+                <li><a href="/prescripteur/liste">Patients</a></li>
+                <li><a href="/prescripteur/messages">Messages</a></li>
+                <li><a href="/prescripteur/demandes">Demandes d&#039;intervention</a></li>
+            </ul>
+        </div>
     </div>
-    <div class="grid" style="width: 90%">
-        <ul class="grid4" id="yw4">
-            <li class="menu_prescripteur_accueil active"><a href="/index.php?r=prescripteur/accueil">Espace
-                prescripteur</a></li>
-            <li><a href="/index.php?r=patient/liste">Patients</a></li>
-            <li><a href="/index.php?r=message/liste">Messages</a></li>
-            <li><a href="/index.php?r=demandeIntervention/liste">Demandes d&#039;intervention</a></li>
-        </ul>
-    </div>
-</div>
-<header id="header" role="banner" class="line logo3">
-    <span class="prescripteur_bienvenue">Bienvenue Dr <span th:text="${prescripteur.getPersonneById().getNom()}"></span> <span th:text="${prescripteur.getPersonneById().getPrenom()}"></span></span>
-</header>
+    <header id="header" role="banner" class="line logo3">
+        <span class="prescripteur_bienvenue">Bienvenue Dr <span
+                th:text="${prescripteur.getPersonneById().getNom()}"></span> <span
+                th:text="${prescripteur.getPersonneById().getPrenom()}"></span></span>
+    </header>
 
-<div id="main" role="main" class="line  pll prl pbl design4">
-    <!-- A voir ce que ça donne: -->
-    <!-- breadcrumbs -->
+    <div id="main" role="main" class="line  pll prl pbl design4">
+        <!-- A voir ce que ça donne: -->
+        <!-- breadcrumbs -->
 
-    <table id="actual-table">
-        <tr>
-            <td class="pr" colspan="1">
-                <h3 class="prescripteur_accueil_patient">Dossiers Patients</h3>
-                <div>
-                    <ul>
-                        <li>
-                            <a th:href="@{/prescripteur/listePatients}"><p><span
-                                    th:text="${nombreTotalPatients}"></span> patients dont vous êtes le prescripteur.
-                            </p></a>
-                        </li>
-                        <li><a th:href="@{/prescripteur/listePatientsActifs}"><p><span
-                                th:text="${nombreTotalPatientsActifs}"></span> patients sont actifs.</p></a></li>
-                        <li><a th:href="@{/prescripteur/listePatientsTelesuivis}"><p><span
-                                th:text="${nombreTotalPatientsTelesuivis}"></span> patients télésuivis.</p></a></li>
-                    </ul>
-                </div>
-            </td>
-            <td class="pr" colspan="1">
-                <h3 class="prescripteur_accueil_stats">Statistiques</h3>
-                <div id="sequence-stats">
+        <table id="actual-table">
+            <tr>
+                <td class="pr" colspan="1">
+                    <h3 class="prescripteur_accueil_patient">Dossiers Patients</h3>
+                    <div>
+                        <ul>
+                            <li>
+                                <a th:href="@{/prescripteur/listePatients}"><p><span
+                                        th:text="${nombreTotalPatients}"></span> patients dont vous êtes le
+                                    prescripteur.
+                                </p></a>
+                            </li>
+                            <li><a th:href="@{/prescripteur/listePatientsActifs}"><p><span
+                                    th:text="${nombreTotalPatientsActifs}"></span> patients sont actifs.</p></a></li>
+                            <li><a th:href="@{/prescripteur/listePatientsTelesuivis}"><p><span
+                                    th:text="${nombreTotalPatientsTelesuivis}"></span> patients télésuivis.</p></a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td class="pr" colspan="1">
+                    <h3 class="prescripteur_accueil_stats">Statistiques</h3>
+                    <div id="sequence-stats">
 
 
-                    <ul class="sequence-canvas">
-                        <li>
-                            <div class="item">
-                                <h4 id="titre-tooltip-stats-obs">Observance</h4>
-                                <div id="tooltip-stats-obs" class="tooltip">Statistique calculée à partir du dernier
-                                    relevé d'observance des patients actifs.
-                                    Les données de téléobservance ne sont pas prises en compte.<br/>Observance inf à 3h
-                                    = Non observant.
+                        <ul class="sequence-canvas">
+                            <li>
+                                <div class="item">
+                                    <h4 id="titre-tooltip-stats-obs">Observance</h4>
+                                    <div id="tooltip-stats-obs" class="tooltip">Statistique calculée à partir du dernier
+                                        relevé d'observance des patients actifs.
+                                        Les données de téléobservance ne sont pas prises en compte.<br/>Observance inf à
+                                        3h
+                                        = Non observant.
+                                    </div>
+                                    <div id="graphobservance" style="width: 400px; height: 150px"></div>
                                 </div>
-                                <div id="graphobservance" style="width: 400px; height: 150px"></div>
-                            </div>
-                        </li>
+                            </li>
 
-                    </ul>
+                        </ul>
 
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="pr">
-                <h3 class="prescripteur_accueil_message">Messages</h3>
-                <div>
-                    <ul>
-                        <li>
-                            <a href="/index.php?r=message/liste">Tous vos messages sont traités.</a></li>
-                        <li>
-                            <a class="prescripteur_nouveau_message" href="/index.php?r=message/create">Envoyer un
-                                nouveau message</a></li>
-                    </ul>
-                </div>
-            </td>
-            <td class="pr">
-                <h3 class="prescripteur_accueil_demande-inter">Demandes d'intervention</h3>
-                <div>
-                    <ul>
-                        <li>
-                            <a href="/index.php?r=demandeIntervention/liste">Toutes vos demandes sont traitées.</a></li>
-                        <li>
-                            <a class="prescripteur_nouvelle_demandeinter"
-                               href="/index.php?r=demandeIntervention/create">Demander une intervention</a></li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="pr">
-                <h3 class="prescripteur_accueil_info">Informations personnelles</h3>
-                <div>
-                    <table class="detail-view" id="yw0">
-                        <tr class="odd">
-                            <th>Adresse</th>
-                            <td><span th:text="${adressePrescripteur.getNomVoie()}"></span></td>
-                        </tr>
-                        <tr class="even">
-                            <th></th>
-                            <td><span th:text="${adressePrescripteur.getCodePostal()}"></span> <span><span th:text="${adressePrescripteur.getVille()}"></span></td>
-                        </tr>
-                    </table>
-                    <table class="detail-view" id="yw1">
-                        <tr class="odd">
-                            <th>Numéro FINESS</th>
-                            <td><span th:text="${prescripteur.getNumeroFiness()}"></span></td>
-                        </tr>
-                        <tr class="even">
-                            <th>Tel Domicile</th>
-                            <td><span th:text="${prescripteur.getPersonneById().getTelDomicile()}"></span></td>
-                        </tr>
-                        <tr class="odd">
-                            <th>Tel Portable</th>
-                            <td><span th:text="${prescripteur.getPersonneById().getTelPortable()}"></span></td>
-                        </tr>
-                        <tr class="even">
-                            <th>Mail</th>
-                            <td><span th:text="${prescripteur.getPersonneById().getMail()}"></span></td>
-                        </tr>
-                        <tr class="odd">
-                            <th>Fax</th>
-                            <td><span th:text="${prescripteur.getPersonneById().getFax()}"></span></td>
-                        </tr>
-                        <tr class="even">
-                            <th>mot de passe</th>
-                            <td>* * * * * * <br><a href="/index.php?r=site/nmdp&amp;id=21">Cliquer ici pour renouveler
-                                le mot de passe</a></td>
-                        </tr>
-                    </table>
-                </div>
-            </td>
-            <td class="pr">
-                <h3 class="prescripteur_accueil_agence">
-                    <span th:text="${prescripteur.getAgenceByAgenceId().getNom()}"></span></h3>
-                <div>
-                    <table class="detail-view" id="yw2">
-                        <tr class="odd">
-                            <th>Adresse</th>
-                            <td><span th:text="${adresseAgence.getNomVoie()}"></span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="pr">
+                    <h3 class="prescripteur_accueil_message">Messages</h3>
+                    <div>
+                        <ul>
+                            <li>
+                                <a href="/index.php?r=message/liste">Tous vos messages sont traités.</a></li>
+                            <li>
+                                <a class="prescripteur_nouveau_message" href="/index.php?r=message/create">Envoyer un
+                                    nouveau message</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td class="pr">
+                    <h3 class="prescripteur_accueil_demande-inter">Demandes d'intervention</h3>
+                    <div>
+                        <ul>
+                            <li>
+                                <a href="/index.php?r=demandeIntervention/liste">Toutes vos demandes sont traitées.</a>
+                            </li>
+                            <li>
+                                <a class="prescripteur_nouvelle_demandeinter"
+                                   href="/index.php?r=demandeIntervention/create">Demander une intervention</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="pr">
+                    <h3 class="prescripteur_accueil_info">Informations personnelles</h3>
+                    <div>
+                        <table class="detail-view" id="yw0">
+                            <tr class="odd">
+                                <th>Adresse</th>
+                                <td><span th:text="${adressePrescripteur.getNomVoie()}"></span></td>
+                            </tr>
+                            <tr class="even">
+                                <th></th>
+                                <td><span th:text="${adressePrescripteur.getCodePostal()}"></span> <span><span
+                                        th:text="${adressePrescripteur.getVille()}"></span></td>
+                            </tr>
+                        </table>
+                        <table class="detail-view" id="yw1">
+                            <tr class="odd">
+                                <th>Numéro FINESS</th>
+                                <td><span th:text="${prescripteur.getNumeroFiness()}"></span></td>
+                            </tr>
+                            <tr class="even">
+                                <th>Tel Domicile</th>
+                                <td><span th:text="${prescripteur.getPersonneById().getTelDomicile()}"></span></td>
+                            </tr>
+                            <tr class="odd">
+                                <th>Tel Portable</th>
+                                <td><span th:text="${prescripteur.getPersonneById().getTelPortable()}"></span></td>
+                            </tr>
+                            <tr class="even">
+                                <th>Mail</th>
+                                <td><span th:text="${prescripteur.getPersonneById().getMail()}"></span></td>
+                            </tr>
+                            <tr class="odd">
+                                <th>Fax</th>
+                                <td><span th:text="${prescripteur.getPersonneById().getFax()}"></span></td>
+                            </tr>
+                            <tr class="even">
+                                <th>mot de passe</th>
+                                <td>* * * * * * <br><a href="/index.php?r=site/nmdp&amp;id=21">Cliquer ici pour
+                                    renouveler
+                                    le mot de passe</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+                <td class="pr">
+                    <h3 class="prescripteur_accueil_agence">
+                        <span th:text="${prescripteur.getAgenceByAgenceId().getNom()}"></span></h3>
+                    <div>
+                        <table class="detail-view" id="yw2">
+                            <tr class="odd">
+                                <th>Adresse</th>
+                                <td><span th:text="${adresseAgence.getNomVoie()}"></span>
 
-                            </td>
-                        </tr>
-                        <tr class="even">
-                            <th></th>
-                            <td><span th:text="${adresseAgence.getCodePostal()}"></span> <span th:text="${adresseAgence.getVille()}"></span></td>
-                        </tr>
-                    </table>
-                    <table class="detail-view" id="yw3">
-                        <tr class="odd">
-                            <th>Horaires</th>
-                            <td><span th:text="${prescripteur.getAgenceByAgenceId().getHoraire()}"></span></td>
-                        </tr>
-                        <tr class="even">
-                            <th>Tel</th>
-                            <td><span th:text="${prescripteur.getAgenceByAgenceId().getTel()}"></span></td>
-                        </tr>
-                        <tr class="odd">
-                            <th>Fax</th>
-                            <td><span th:text="${prescripteur.getAgenceByAgenceId().getFax()}"></span></td>
-                        </tr>
-                        <tr class="even">
-                            <th>Mail</th>
-                            <td><span th:text="${prescripteur.getAgenceByAgenceId().getMail()}"></span></td>
-                        </tr>
-                    </table>
-                </div>
-            </td>
-        </tr>
-    </table>
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <th></th>
+                                <td><span th:text="${adresseAgence.getCodePostal()}"></span> <span
+                                        th:text="${adresseAgence.getVille()}"></span></td>
+                            </tr>
+                        </table>
+                        <table class="detail-view" id="yw3">
+                            <tr class="odd">
+                                <th>Horaires</th>
+                                <td><span th:text="${prescripteur.getAgenceByAgenceId().getHoraire()}"></span></td>
+                            </tr>
+                            <tr class="even">
+                                <th>Tel</th>
+                                <td><span th:text="${prescripteur.getAgenceByAgenceId().getTel()}"></span></td>
+                            </tr>
+                            <tr class="odd">
+                                <th>Fax</th>
+                                <td><span th:text="${prescripteur.getAgenceByAgenceId().getFax()}"></span></td>
+                            </tr>
+                            <tr class="even">
+                                <th>Mail</th>
+                                <td><span th:text="${prescripteur.getAgenceByAgenceId().getMail()}"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
 
 
-    <script type="text/javascript">
-        $(document).ready(function () {
+        <div class="footer" th:replace="fragments/footer :: footer">
+        </div>
 
-            var options = {
-                nextButton: true,
-                prevButton: true,
-                autoPlay: false //use Sequence's autoPlay feature
-                //autoPlayDelay: 2000,
-                //pauseOnHover: false
-                //Sequence options go here. See here: http://www.sequencejs.com/documentation.html#developers
-            }
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-            var sequence = $("#sequence-stats").sequence(options).data("sequence");
-        });
-    </script>
+            ga('create', 'UA-46937887-1', 'air-sante.fr');
+            ga('send', 'pageview');
 
-    <div class="footer" th:replace="fragments/footer :: footer">
+        </script>
     </div>
-
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-46937887-1', 'air-sante.fr');
-        ga('send', 'pageview');
-
-    </script>
-</div>
 </div>
 </body>
 </html>

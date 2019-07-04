@@ -61,4 +61,52 @@ public class SiteController {
         modelAndView.setViewName("error500");
         return modelAndView;
     }
+
+
+    @RequestMapping(value = "/agences", method = RequestMethod.GET)
+    public ModelAndView agences(ModelAndView modelAndView) {
+        modelAndView.setViewName("Site/agences");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/contact", method = RequestMethod.GET)
+    public ModelAndView contact(ModelAndView modelAndView) {
+        modelAndView.setViewName("Site/contact");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/nosprestations/apnee", method = RequestMethod.GET)
+    public ModelAndView apnee(ModelAndView modelAndView) {
+        modelAndView.setViewName("Site/apnee");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/nosprestations/ventilation", method = RequestMethod.GET)
+    public ModelAndView ventilation(ModelAndView modelAndView) {
+        modelAndView.setViewName("Site/ventilation");
+        return modelAndView;
+    }
+    @RequestMapping(value = "/nosprestations/oxygene", method = RequestMethod.GET)
+    public ModelAndView oxygene(ModelAndView modelAndView) {
+        modelAndView.setViewName("Site/oxygene");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/nosprestations/aerosol", method = RequestMethod.GET)
+    public ModelAndView aerosol(ModelAndView modelAndView) {
+        modelAndView.setViewName("Site/aerosol");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/nosprestations/conseils", method = RequestMethod.GET)
+    public ModelAndView conseils(ModelAndView modelAndView) {
+        modelAndView.setViewName("Site/conseils");
+        return modelAndView;
+    }
+
+
+
+
+
+
 }

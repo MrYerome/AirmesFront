@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headIndex :: head">
+</head>
+<body class="design4">
+<div id="bandeau-noir-haut" class="bandeau-noir">
+    <div th:replace="fragments/navbar :: navbar">
+    </div>
+</div>
+<div id="page" class="line page design4">
+    <div id="main" role="main" class="line  pll prl pbl design4">
+        <div class="grid mtl">
+            <div class="grid1-2">
+                <div>
+                    Air Santé agit principalement dans les régions Bretagne, Pays de la Loire, Normandie et le Centre et
+                    développe son activité dans certaines régions comme les Hauts de France, les régions Nouvelle
+                    Aquitaine,
+                    Occitanie et Provence-Alpes Cote d'Azur.
+                    <br/>
+
+                    <h2>Siège social</h2>
+                    <div>
+                        Situé dans la zone industrielle "Carrières Beurrières" - Allée Augustin Cauchy à
+                        <strong>Avrillé</strong> (49240), la SARL Air Santé se trouve à environ 10 mn du centre ville
+                        d'Angers
+                        en direction de Laval.
+                        <p>
+                            3 allée Augustin Cauchy<br/>
+                            ZI Carrières Beurrière<br/>
+                            49240 Avrillé
+                        </p>
+                    </div>
+                    <h2>Nos agences</h2>
+                    <div>
+                        <h3>Saint-Brieuc</h3>
+                        <p>02 96 01 36 31<br/>4 avenue des châtelets<br/>22440 Ploufragan</p>
+
+                        <h3>Beauvais</h3>
+                        <p>03 65 69 00 34<br/>26 avenue Salvador Allende<br/>60000 Beauvais</p>
+
+                        <h3>Agen </h3>
+                        <p>133 rue Pierre Mendes-France<br/>47000 Agen</p>
+
+                    </div>
+                </div>
+                <div>
+                    <br/><br/>
+                    <img th:src="@{/images/zone-intervention2019.png}" } alt="Zone intervention air santé"/>
+                </div>
+            </div>
+        </div>
+        <h2>Siège social à Avrillé:</h2>
+        <div>
+            <iframe width="100%" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                    src="https://maps.google.fr/maps?hl=fr&amp;ie=UTF8&amp;view=map&amp;cid=12782121777565137039&amp;q=Air+Sant%C3%A9&amp;hq=Air+Sant%C3%A9&amp;hnear=&amp;source=embed&amp;t=h&amp;iwloc=A&amp;ll=47.496604,-0.594764&amp;spn=0.006524,0.011759&amp;output=embed"></iframe>
+
+        </div>
+
+
+        <div class="footer" th:replace="fragments/footer :: footer">
+        </div>
+    </div>
+</div>
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-46937887-1', 'air-sante.fr');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

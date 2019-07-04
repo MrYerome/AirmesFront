@@ -1634,8 +1634,9 @@ header.logo3.design5 {
     padding-right: 5px;
     position: relative;
     text-align: right;
-    top: -520px;
+    top: -620px;
     color: #554f58;
+    z-index: 999;
 }
 
 .info-accueil.apneedusommeil.design5 {

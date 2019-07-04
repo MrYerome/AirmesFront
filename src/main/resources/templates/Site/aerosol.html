@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headIndex :: head">
+</head>
+<body class="design4">
+<div id="bandeau-noir-haut" class="bandeau-noir">
+    <div th:replace="fragments/navbar :: navbar">
+    </div>
+</div>
+<div id="page" class="line page design4">
+    <div class="line page txtright" style="display: none">
+				<span class="numero_tel">
+					02 41 87 33 53 <span class="h24"><sup>24H</sup>&frasl;<sub>24</sub></span>
+				</span>
+    </div>
+
+    <div class="line"></div>
+
+    <div id="main" role="main" class="line  pll prl pbl design4">
+        <div class='pageweb'><h2>A&eacute;rosolth&eacute;rapie</h2>
+
+            <p>L&rsquo;a&eacute;rosolth&eacute;rapie est un proc&eacute;d&eacute; consistant &agrave; faire inhaler
+                &agrave; un patient un m&eacute;dicament en suspension dans l&rsquo;air.</p>
+
+            <p>Deux cibles sont vis&eacute;es&nbsp;: la sph&egrave;re ORL (oto-rhino-laryngologique) et la sph&egrave;re
+                pulmonaire.</p>
+
+            <p>&nbsp;</p>
+        </div>
+    </div>
+
+
+    <div class="footer" th:replace="fragments/footer :: footer">
+    </div>
+</div>
+</div>
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-46937887-1', 'air-sante.fr');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
