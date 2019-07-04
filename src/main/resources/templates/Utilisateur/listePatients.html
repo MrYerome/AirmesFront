@@ -14,7 +14,9 @@
     </div>
 
     <div id="main" role="main" class="line  pll prl pbl design4">
-        <h3>Vous avez <span th:text="${#lists.size(listPatientsPrescripteur)}"> </span> <span th:text="${typeCategorie}"></span></h3>
+        <h1>Liste de vos patients</h1>
+
+        <p>Vous avez <span th:text="${#lists.size(listPatientsUtilisateur)}"> patients actifs.</span></p>
 
         <div style="cursor: pointer;" id="patient-grid" class="grid-view">
 
@@ -33,7 +35,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="patient, status : ${listPatientsPrescripteur}"
+                <tr th:each="patient, status : ${listPatientsUtilisateur}"
                     th:class="${status.odd} ? 'odd' : 'even'">
                     <td th:text="${patient.nom}">Nom</td>
                     <td th:text="${patient.prenom}">Prénom</td>

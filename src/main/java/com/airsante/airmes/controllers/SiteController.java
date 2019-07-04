@@ -1,10 +1,22 @@
 package com.airsante.airmes.controllers;
 
+import com.airsante.airmes.utils.MediaTypeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
 
@@ -18,7 +30,12 @@ public class SiteController {
     @Value("${my.url.api}")
     private String URL;
 
+    private static final String DIRECTORY = "C:\\DEV\\AirmesFront\\AirmesFront\\src\\main\\resources\\static\\upload\\";
+    private static final String DEFAULT_FILE_NAME = "decret-ppc.pdf";
+    private static final String DEFAULT_FILE_NAME_RGPD = "Document_RGPD_AirSante.pdf";
 
+    @Autowired
+    private ServletContext servletContext;
 
     /**
      * Permet d'accéder à / ou /index
@@ -28,7 +45,6 @@ public class SiteController {
     @RequestMapping(value ={"", "/", "index"}, method = RequestMethod.GET)
     public ModelAndView index(ModelAndView modelAndView) {
         modelAndView.setViewName("index");
-        modelAndView.addObject("URL", URL);
         return modelAndView;
     }
 
@@ -104,9 +120,59 @@ public class SiteController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/nosprestations", method = RequestMethod.GET)
+    public ModelAndView nosprestations(ModelAndView modelAndView) {
+        modelAndView.setViewName("Site/nosprestations");
+        return modelAndView;
+    }
 
+    @RequestMapping(value = "/mentionslegales", method = RequestMethod.GET)
+    public ModelAndView mentionslegales(ModelAndView modelAndView) {
+        modelAndView.setViewName("Site/mentionslegales");
+        return modelAndView;
+    }
 
+    @RequestMapping(value = "/decret", method = RequestMethod.GET)
+    public ResponseEntity<InputStreamResource> downloadDecret(
+            @RequestParam(defaultValue = DEFAULT_FILE_NAME) String fileName) throws IOException {
 
+        MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
+        System.out.println("fileName: " + fileName);
+        System.out.println("mediaType: " + mediaType);
+
+        File file = new File(DIRECTORY + "/" + fileName);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                // Content-Type
+                .contentType(mediaType)
+                // Contet-Length
+                .contentLength(file.length()) //
+                .body(resource);
+    }
+
+    @RequestMapping(value = "/rgpd", method = RequestMethod.GET)
+    public ResponseEntity<InputStreamResource> downloadRgpd(
+            @RequestParam(defaultValue = DEFAULT_FILE_NAME_RGPD) String fileName) throws IOException {
+
+        MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, fileName);
+        System.out.println("fileName: " + fileName);
+        System.out.println("mediaType: " + mediaType);
+
+        File file = new File(DIRECTORY + "/" + fileName);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                // Content-Type
+                .contentType(mediaType)
+                // Contet-Length
+                .contentLength(file.length()) //
+                .body(resource);
+    }
 
 
 }

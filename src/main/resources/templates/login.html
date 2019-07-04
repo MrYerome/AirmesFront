@@ -1,51 +1,43 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-    <meta charset="utf-8" http-equiv="Content-Type" content="text/html">
-    <title>Connexion</title>
-    <link rel="icon" type="image/png" href="images/favicon-air-sante.png"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" media="all" href="css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" type="text/css" href="css/knacss.css" media="all">
-    <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
-    <link rel="stylesheet" type="text/css" href="css/tables.css" media="all">
-
-    <script src="js/jquery-min.js"></script>
-    <script src="js/jquery.sequence-min.js"></script>
-
-    <script type="text/javascript" src="js/jquery.flot.min.js"></script>
-    <script type="text/javascript" src="js/jquery.flot.time.min.js"></script>
-    <script type="text/javascript" src="js/jquery.flot.pie.min.js"></script>
-
-    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="js/dataTables.bootstrap4.min.js"></script>
-
-    <script src="js/ckeditor/ckeditor.js"></script>
+<head th:replace="fragments/head :: head">
 </head>
-<body>
-<div th:if="${param.error}">
-    <p>Erreur d'identifiant ou de mot de passe</p>
-    <a href="index"><input type="submit" value="Retour à l'accueil"></a>
-</div>
-<div th:if="${param.logout}">
-    <p>Vous êtes déconnecté.</p>
-    <a href="index"><input type="submit" value="Retour à l'accueil"></a>
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> Utilisateur : <input type="text" name="username"/> </label></div>
-    <div><label> Mot de passe : <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Se connecter"/></div>
-    <div th:if="${param.login}">
-        Vous êtes déconnecté.
-        <div><input th:action="@{/logout}" type="submit" value="Se déconnecter"/></div>
+<body class="design4">
+<div id="bandeau-noir-haut" class="bandeau-noir">
+    <div th:replace="fragments/navbar :: navbar">
     </div>
-</form>
-<div sec:authorize="isAuthenticated()">
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Se déconnecter"/>
-    </form>
+</div>
+<div id="page" class="line page design4">
+
+    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur">
+    </div>
+
+    <div id="main" role="main" class="line  pll prl pbl design4">
+        <div th:if="${param.error}">
+            <p>Erreur d'identifiant ou de mot de passe</p>
+            <a href="index"><input type="submit" value="Retour à l'accueil"></a>
+        </div>
+        <div th:if="${param.logout}">
+            <p>Vous êtes déconnecté.</p>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <form th:action="@{/login}" method="post">
+                <div><label> Utilisateur : <input type="text" name="username"/> </label></div>
+                <div><label> Mot de passe : <input type="password" name="password"/> </label></div>
+                <div><input type="submit" value="Se connecter"/></div>
+                <div th:if="${param.login}">
+                    Vous êtes déconnecté.
+                    <div><input th:action="@{/logout}" type="submit" value="Se déconnecter"/></div>
+                </div>
+            </form>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Se déconnecter"/>
+            </form>
+        </div>
+    </div>
 </div>
 
 

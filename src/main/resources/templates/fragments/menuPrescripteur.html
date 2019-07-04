@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">YPE html>
+
+<div id="menu_prescripteur" th:fragment="menuPrescripteur">
+    <div style="float: right; width: 10%;">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Se déconnecter"/>
+        </form>
+
+
+    </div>
+    <div class="grid" style="width: 90%">
+        <ul class="grid4" id="yw4">
+            <li class="menu_prescripteur_accueil active"><a href="/prescripteur/index">Espace
+                prescripteur</a></li>
+            <li><a href="/prescripteur/listePatients">Patients</a></li>
+            <li><a href="/prescripteur/messages">Messages</a></li>
+            <li><a href="/prescripteur/demandes">Demandes d&#039;intervention</a></li>
+        </ul>
+    </div>
+</div>
+</html>

@@ -37,12 +37,12 @@ public class PersonneController {
 	
 	  // -------------------Retrieve Single Adresse------------------------------------------
 	  
-	  @RequestMapping(value = "/personne/{id}", method = RequestMethod.GET) 
-		public ModelAndView adresseSignle(@PathVariable("id") int id, ModelAndView modelAndView) {
-			modelAndView.setViewName("Personne/getPersonne");
-			modelAndView.addObject("personne", PersonneServiceApi.findById(id));
-			return modelAndView;		
-		}
+//	  @RequestMapping(value = "/personne/{id}", method = RequestMethod.GET)
+//		public ModelAndView adresseSignle(@PathVariable("id") int id, ModelAndView modelAndView) {
+//			modelAndView.setViewName("Personne/getPersonne");
+//			modelAndView.addObject("personne", PersonneServiceApi.findById(id));
+//			return modelAndView;
+//		}
 	  
 	  
 

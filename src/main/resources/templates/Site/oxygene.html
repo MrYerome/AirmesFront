@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments/headIndex :: head">
 </head>
 <body class="design4">
@@ -8,6 +9,8 @@
     </div>
 </div>
 <div id="page" class="line page design4">
+    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur">
+    </div>
     <div class="line page txtright" style="display: none">
 				<span class="numero_tel">
 					02 41 87 33 53 <span class="h24"><sup>24H</sup>&frasl;<sub>24</sub></span>
@@ -19,34 +22,52 @@
     <div id="main" role="main" class="line  pll prl pbl design4">
         <div class='pageweb'><h2>Oxyg&eacute;noth&eacute;rapie</h2>
 
-            <p>L&rsquo;oxyg&egrave;ne m&eacute;dical est un m&eacute;dicament. Sa dispensation est plac&eacute;e sous la responsabilit&eacute; de notre pharmacien.</p>
+            <p>L&rsquo;oxyg&egrave;ne m&eacute;dical est un m&eacute;dicament. Sa dispensation est plac&eacute;e sous la
+                responsabilit&eacute; de notre pharmacien.</p>
 
-            <p>L&#39;oxyg&eacute;noth&eacute;rapie est un traitement visant &agrave; augmenter l&rsquo;apport d&rsquo;oxyg&egrave;ne dans l&rsquo;air inspir&eacute; par un malade, de fa&ccedil;on &agrave; r&eacute;tablir ou &agrave; maintenir un taux normal d&#39;oxyg&egrave;ne dans le sang.</p>
+            <p>L&#39;oxyg&eacute;noth&eacute;rapie est un traitement visant &agrave; augmenter l&rsquo;apport d&rsquo;oxyg&egrave;ne
+                dans l&rsquo;air inspir&eacute; par un malade, de fa&ccedil;on &agrave; r&eacute;tablir ou &agrave;
+                maintenir un taux normal d&#39;oxyg&egrave;ne dans le sang.</p>
 
             <p>Nous proposons plusieurs possibilit&eacute;s de traitement&nbsp;:</p>
 
             <h3>Oxyg&egrave;ne liquide</h3>
 
-            <p>L&rsquo;oxyg&egrave;ne est conserv&eacute; &agrave; tr&egrave;s basse temp&eacute;rature dans des r&eacute;servoirs ad&eacute;quats. Notre livreur passe &agrave; un intervalle d&eacute;fini en fonction de la prescription et de l&rsquo;utilisation de l&rsquo;oxyg&egrave;ne pour livrer des cuves d&rsquo;oxyg&egrave;ne liquide au domicile du patient. &Agrave; partir de ces r&eacute;servoirs, le patient est en mesure de remplir un contenant de plus petit volume (portable) lui permettant ainsi de se d&eacute;placer et sortir hors du domicile avec son traitement.</p>
+            <p>L&rsquo;oxyg&egrave;ne est conserv&eacute; &agrave; tr&egrave;s basse temp&eacute;rature dans des r&eacute;servoirs
+                ad&eacute;quats. Notre livreur passe &agrave; un intervalle d&eacute;fini en fonction de la prescription
+                et de l&rsquo;utilisation de l&rsquo;oxyg&egrave;ne pour livrer des cuves d&rsquo;oxyg&egrave;ne liquide
+                au domicile du patient. &Agrave; partir de ces r&eacute;servoirs, le patient est en mesure de remplir un
+                contenant de plus petit volume (portable) lui permettant ainsi de se d&eacute;placer et sortir hors du
+                domicile avec son traitement.</p>
 
             <h3>Oxyg&eacute;noth&eacute;rapie par concentrateur</h3>
 
-            <p>Le concentrateur est un dispositif m&eacute;dical qui a pour but de fournir un air enrichi en oxyg&egrave;ne. Il fonctionne sur le secteur et concentre l&rsquo;oxyg&egrave;ne pr&eacute;sent dans l&rsquo;air afin de le d&eacute;livrer au patient. Dans ce proc&eacute;d&eacute;, il n&rsquo;y a aucun stock d&rsquo;oxyg&egrave;ne au domicile du patient, l&rsquo;oxyg&egrave;ne est d&eacute;livr&eacute; de fa&ccedil;on imm&eacute;diate, avec un d&eacute;bit d&eacute;fini par la prescription m&eacute;dicale</p>
+            <p>Le concentrateur est un dispositif m&eacute;dical qui a pour but de fournir un air enrichi en oxyg&egrave;ne.
+                Il fonctionne sur le secteur et concentre l&rsquo;oxyg&egrave;ne pr&eacute;sent dans l&rsquo;air afin de
+                le d&eacute;livrer au patient. Dans ce proc&eacute;d&eacute;, il n&rsquo;y a aucun stock d&rsquo;oxyg&egrave;ne
+                au domicile du patient, l&rsquo;oxyg&egrave;ne est d&eacute;livr&eacute; de fa&ccedil;on imm&eacute;diate,
+                avec un d&eacute;bit d&eacute;fini par la prescription m&eacute;dicale</p>
 
             <h3>Les bouteilles d&rsquo;oxyg&egrave;ne gazeux</h3>
 
-            <p>Elles sont principalement utilis&eacute;es comme source d&rsquo;oxyg&egrave;ne de secours pour les patients b&eacute;n&eacute;ficiant d&rsquo;un traitement d&rsquo;oxyg&eacute;noth&eacute;rapie par concentrateur ou pour les d&eacute;placements</p>
+            <p>Elles sont principalement utilis&eacute;es comme source d&rsquo;oxyg&egrave;ne de secours pour les
+                patients b&eacute;n&eacute;ficiant d&rsquo;un traitement d&rsquo;oxyg&eacute;noth&eacute;rapie par
+                concentrateur ou pour les d&eacute;placements</p>
 
-            <p>Notre &eacute;quipe est &agrave; votre &eacute;coute et &agrave; votre disposition. Tout patient qui se voit prescrire un traitement par oxyg&eacute;noth&eacute;rapie re&ccedil;oit une formation sur l&rsquo;oxyg&egrave;ne et sur l&rsquo;utilisation et la manipulation des appareils, par un de nos techniciens en assistance respiratoire.</p>
+            <p>Notre &eacute;quipe est &agrave; votre &eacute;coute et &agrave; votre disposition. Tout patient qui se
+                voit prescrire un traitement par oxyg&eacute;noth&eacute;rapie re&ccedil;oit une formation sur l&rsquo;oxyg&egrave;ne
+                et sur l&rsquo;utilisation et la manipulation des appareils, par un de nos techniciens en assistance
+                respiratoire.</p>
 
             <p>&nbsp;</p>
-        </div>		</div>
+        </div>
+    </div>
 
 
     <div class="footer" th:replace="fragments/footer :: footer">
     </div>
 </div>
-</div>
+
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

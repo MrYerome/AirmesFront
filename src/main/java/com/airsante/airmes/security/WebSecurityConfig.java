@@ -107,6 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         // Réécupération et stockage du token
                         String token = Token.getTokenApi();
                         StoreSession.storeToken(request.getSession(), token);
+                        System.out.println(token);
                         //Récupération et stockage du username
                         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                         String username = "";
@@ -126,13 +127,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                         redirection = "/admin";
                                         break;
                                     case "ROLE_AIRSANTE":
-                                        redirection = "/";
+                                        redirection = "/utilisateur/index";
+                                        break;
+                                    case "ROLE_USER":
+                                        redirection = "/utilisateur/index";
                                         break;
                                     case "ROLE_PRESCRIPTEUR":
                                         redirection = "/prescripteur/index";
                                         break;
                                     case "ROLE_PATIENT":
-                                        redirection = "/";
+                                        redirection = "/patient/index";
                                         break;
                                     default:
                                         redirection = "/";

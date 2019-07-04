@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments/headIndex :: head">
+</head>
+<body class="design4">
+<div id="bandeau-noir-haut" class="bandeau-noir">
+    <div th:replace="fragments/navbar :: navbar">
+    </div>
+</div>
+<div id="page" class="line page design4">
+    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur">
+    </div>
+    <div class="line page txtright" style="display: none">
+				<span class="numero_tel">
+					02 41 87 33 53 <span class="h24"><sup>24H</sup>&frasl;<sub>24</sub></span>
+				</span>
+    </div>
+
+    <div class="line"></div>
+
+    <div id="main" role="main" class="line  pll prl pbl design4">﻿
+        <div>
+            <p>
+                Air Santé, Sarl au capital de 7500€ ( RCS Angers sous le numéro 444 654 990 ) situé 3 allée Augustin
+                Cauchy, 49240 AVRILLÉ.<br>
+                Air Santé est représentée par Mr BAUCHER Pierre en sa qualité de directeur général, joignable au 02 41
+                87 33 53 et par mail à l'adresse accueil[at] air-sante.fr
+            </p>
+            <p>
+                Ce site, air-sante.fr, est la propriété exclusive de Air Santé. Toute reproduction ou représentation
+                totale ou partielle de ce site par quelque procédé que ce soit,
+                sans l'autorisation expresse de Air Santé est interdite et constituerait une contrefaçon sanctionnée par
+                les articles L335-2 et suivants du Code de la propriété intellectuelle.<br>
+                <strong>Hébergement: </strong>OVH ,2 rue Kellermann - 59100 Roubaix - France<br>
+                <strong>Crédit photo: </strong><a url="https://fr.fotolia.com">Fotolia</a> et Air Santé
+            </p>
+            <p>
+                L’usager dispose d’un droit de demander l’accès à ses données à caractère personnel, la rectification ou
+                l’effacement de celles-ci, et de décider du sort de ces données, post mortem. L’usager dispose également
+                d’un droit de s’opposer au traitement pour motifs légitimes, de limiter le traitement dont il fait
+                l’objet et d’un droit à la portabilité des données à caractère personnel dans les limites fixées par la
+                loi.
+                Ces droits peuvent être exercés, en justifiant de son identité (nom, prénom, adresse, copie recto-verso
+                de la pièce d’identité), par email à <a href="mailto:dpo@air-sante.fr">dpo@air-sante.fr</a> ou par
+                courrier à l’attention du Délégué à la protection des données, AIR SANTE, ZI Carrières Beurrières, Allée
+                Augustin Cauchy, 49240 AVRILLE.<br><br>
+                L’usager dispose également du droit de contacter la CNIL directement sur le site internet <a
+                    href="https://www.cnil.fr/fr/agir">https://www.cnil.fr/fr/agir</a> ou par courrier à l’adresse
+                suivante : Commission Nationale de l’Informatique et des Libertés, 3 place de Fontenoy – TSA 80715,
+                75334 PARIS CEDEX 07.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="footer" th:replace="fragments/footer :: footer">
+    </div>
+</div>
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-46937887-1', 'air-sante.fr');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

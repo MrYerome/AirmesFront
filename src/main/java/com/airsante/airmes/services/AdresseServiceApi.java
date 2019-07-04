@@ -105,7 +105,7 @@ public class AdresseServiceApi {
 		return adresse;
 	}
 
-	public static Adresse findAdressePrescripteur(long id, String token) {
+	public static Adresse findAdressePersonne(long id, String token) {
 		RestTemplate restTemplate = new RestTemplate();
 		headers.set("Authorization", "Bearer " + token);
 		HttpEntity<String> header = new HttpEntity<String>(headers);

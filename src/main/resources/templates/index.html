@@ -51,6 +51,9 @@
 
 <div id="page" class="line page design4">
 
+    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur">
+    </div>
+
     <div class="line page txtright" style="display: none">
         02 41 87 33 53 <span class="h24"><sup>24H</sup>&frasl;<sub>24</sub> </span>
     </div>

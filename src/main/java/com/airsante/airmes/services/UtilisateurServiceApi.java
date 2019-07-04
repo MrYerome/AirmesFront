@@ -1,9 +1,9 @@
 package com.airsante.airmes.services;
 
 import com.airsante.airmes.modelsJson.Prescripteur;
+import com.airsante.airmes.modelsJson.Utilisateur;
 import com.airsante.airmes.utils.Constantes;
 import com.airsante.airmes.utils.StoreSession;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
 
-public class PrescripteurServiceApi {
+public class UtilisateurServiceApi {
 
     final static String URL = Constantes.getUrl();
     static HttpHeaders headers = new HttpHeaders();
@@ -28,11 +28,13 @@ public class PrescripteurServiceApi {
         RestTemplate restTemplate = new RestTemplate();
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> header = new HttpEntity<String>(headers);
-        String content = URL+"prescripteur/search/getPrescripteurByIdentifiant?login="+identifiant+"&projection=inlinePrescripteur";
-        Prescripteur prescripteur = restTemplate.exchange(content, HttpMethod.GET, header, Prescripteur.class).getBody();
-        System.out.println(prescripteur);
-        StoreSession.storePrescripteur(session, prescripteur);
-        return prescripteur.getDataId();
+        String content = URL+"utilisateur/search/getUtilisateurByIdentifiant?identifiant="+identifiant+"&projection=inlineUtilisateur";
+
+        Utilisateur utilisateur = restTemplate.exchange(content, HttpMethod.GET, header, Utilisateur.class).getBody();
+        System.out.println(utilisateur);
+        System.out.println(utilisateur.getDataId());
+        StoreSession.storeUtilisateur(session, utilisateur);
+        return utilisateur.getDataId();
     }
 
 

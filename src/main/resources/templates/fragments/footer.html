@@ -3,7 +3,8 @@
 <body>
 <div class="footer" th:fragment="footer">
     <footer id="footer" role="contentinfo" class="line bandeau-noir txtcenter txtfooter">
-        &copy; Air Santé<br />
+        <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
+        <span> &copy; Air Santé - </span><a href="/mentionslegales">Mentions légales</a><br />
     </footer>
 </div>
 

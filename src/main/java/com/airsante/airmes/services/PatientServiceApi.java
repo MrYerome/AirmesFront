@@ -24,8 +24,84 @@ public class PatientServiceApi {
 
     static Collection<PatientCustom> CollPatients = new ArrayList<PatientCustom>();
 
+
+    /**
+     * TOTAL #########################################################################################################
+     * Le nombre de patients TOTAL
+     */
+
+    public static int nombreTotalPatients(String token) {
+        int nombreTotalPatients = 0;
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String content = URL + "CustomControllerUtilisateur/nombreTotalPatients" ;
+            ResponseEntity<String> response = restTemplate.exchange(
+                    content, HttpMethod.GET, entity, String.class);
+            if (response.getStatusCode() == HttpStatus.OK) {
+                System.out.println("nombreTotalPatients : " + Integer.parseInt(response.getBody()));
+                nombreTotalPatients = Integer.parseInt(response.getBody());
+            } else {
+                System.out.println(response.getStatusCode());
+                nombreTotalPatients = 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            nombreTotalPatients = 0;
+        }
+        return nombreTotalPatients;
+    }
+
+    public static int nombreTotalPatientsActifs(String token) {
+        int nombreTotalPatientsActifs = 0;
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String content = URL + "CustomControllerUtilisateur/nombreTotalPatientsActifs";
+            ResponseEntity<String> response = restTemplate.exchange(
+                    content, HttpMethod.GET, entity, String.class);
+            if (response.getStatusCode() == HttpStatus.OK) {
+                System.out.println("nombreTotalPatientsActifs : " + Integer.parseInt(response.getBody()));
+                nombreTotalPatientsActifs = Integer.parseInt(response.getBody());
+            } else {
+                System.out.println(response.getStatusCode());
+                nombreTotalPatientsActifs = 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            nombreTotalPatientsActifs = 0;
+        }
+        return nombreTotalPatientsActifs;
+    }
+
+    public static int nombreTotalPatientsTelesuivis(String token) {
+        int nombreTotalPatientsTelesuivis = 0;
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String content = URL + "CustomControllerUtilisateur/nombreTotalPatientsTelesuivis";
+            ResponseEntity<String> response = restTemplate.exchange(
+                    content, HttpMethod.GET, entity, String.class);
+            if (response.getStatusCode() == HttpStatus.OK) {
+                System.out.println("nombreTotalPatientsTelesuivis : " + Integer.parseInt(response.getBody()));
+                nombreTotalPatientsTelesuivis = Integer.parseInt(response.getBody());
+            } else {
+                System.out.println(response.getStatusCode());
+                nombreTotalPatientsTelesuivis = 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            nombreTotalPatientsTelesuivis = 0;
+        }
+        return nombreTotalPatientsTelesuivis;
+    }
+
     /**
      * Permet de récupérer une liste restful avec l'en-tâte "embedded"
+     *
      * @param token
      * @return
      */
@@ -79,14 +155,13 @@ public class PatientServiceApi {
     }
 
 
-
-    public static Collection<PatientCustom> findPatientsPrescripteur(long id, String token){
+    public static Collection<PatientCustom> findPatientsPrescripteur(long id, String token) {
         headers.set("Authorization", "Bearer " + token);
         System.out.println(token);
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String content = URL + "customRequests/listePatientsPrescripteur?param="+id;
+            String content = URL + "CustomControllerPrescripteurs/listePatientsPrescripteur?param=" + id;
             ResponseEntity<Collection<PatientCustom>> response = restTemplate.exchange(
                     content, HttpMethod.GET, entity,
                     new ParameterizedTypeReference<Collection<PatientCustom>>() {
@@ -98,13 +173,111 @@ public class PatientServiceApi {
         return CollPatients;
     }
 
-    public static int nombreTotalPatients(long id, String token){
-        int nombreTotalPatients = 0;
-         headers.set("Authorization", "Bearer " + token);
+    public static Collection<PatientCustom> findPatientsActifsPrescripteur(long id, String token) {
+        headers.set("Authorization", "Bearer " + token);
+        System.out.println(token);
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String content = URL + "customRequests/nombreTotalPatients?param="+id;
+            String content = URL + "CustomControllerPrescripteurs/listePatientsActifsPrescripteur?param=" + id;
+            ResponseEntity<Collection<PatientCustom>> response = restTemplate.exchange(
+                    content, HttpMethod.GET, entity,
+                    new ParameterizedTypeReference<Collection<PatientCustom>>() {
+                    });
+            CollPatients = response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CollPatients;
+    }
+
+    public static Collection<PatientCustom> findPatientsActifsTOPrescripteur(long id, String token) {
+        headers.set("Authorization", "Bearer " + token);
+        System.out.println(token);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String content = URL + "CustomControllerPrescripteurs/listePatientsActifsTOPrescripteur?param=" + id;
+            ResponseEntity<Collection<PatientCustom>> response = restTemplate.exchange(
+                    content, HttpMethod.GET, entity,
+                    new ParameterizedTypeReference<Collection<PatientCustom>>() {
+                    });
+            CollPatients = response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CollPatients;
+    }
+
+
+    public static Collection<PatientCustom> findPatients(String token) {
+        headers.set("Authorization", "Bearer " + token);
+        System.out.println(token);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String content = URL + "CustomControllerUtilisateur/listePatients";
+            ResponseEntity<Collection<PatientCustom>> response = restTemplate.exchange(
+                    content, HttpMethod.GET, entity,
+                    new ParameterizedTypeReference<Collection<PatientCustom>>() {
+                    });
+            CollPatients = response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CollPatients;
+    }
+
+    public static Collection<PatientCustom> findPatientsActifs(String token) {
+        headers.set("Authorization", "Bearer " + token);
+        System.out.println(token);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String content = URL + "CustomControllerUtilisateur/listePatientsActifs";
+            ResponseEntity<Collection<PatientCustom>> response = restTemplate.exchange(
+                    content, HttpMethod.GET, entity,
+                    new ParameterizedTypeReference<Collection<PatientCustom>>() {
+                    });
+            CollPatients = response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CollPatients;
+    }
+
+    public static Collection<PatientCustom> findPatientsActifsTO(String token) {
+        headers.set("Authorization", "Bearer " + token);
+        System.out.println(token);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String content = URL + "CustomControllerUtilisateur/listePatientsActifsTO";
+            ResponseEntity<Collection<PatientCustom>> response = restTemplate.exchange(
+                    content, HttpMethod.GET, entity,
+                    new ParameterizedTypeReference<Collection<PatientCustom>>() {
+                    });
+            CollPatients = response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CollPatients;
+    }
+
+
+
+    /**
+     * TOTAL #########################################################################################################
+     * Le nombre de patients PAR PRESCRIPTEUR
+     */
+
+    public static int nombreTotalPatientsPrescripteur(long id, String token) {
+        int nombreTotalPatients = 0;
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String content = URL + "CustomControllerPrescripteurs/nombreTotalPatientsPrescripteur?param=" + id;
             ResponseEntity<String> response = restTemplate.exchange(
                     content, HttpMethod.GET, entity, String.class);
             if (response.getStatusCode() == HttpStatus.OK) {
@@ -112,22 +285,22 @@ public class PatientServiceApi {
                 nombreTotalPatients = Integer.parseInt(response.getBody());
             } else {
                 System.out.println(response.getStatusCode());
-                nombreTotalPatients=0;
+                nombreTotalPatients = 0;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            nombreTotalPatients=0;
+            nombreTotalPatients = 0;
         }
         return nombreTotalPatients;
     }
 
-    public static int nombreTotalPatientsActifs(long id, String token){
+    public static int nombreTotalPatientsActifsPrescripteur(long id, String token) {
         int nombreTotalPatientsActifs = 0;
-         headers.set("Authorization", "Bearer " + token);
+        headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String content = URL + "customRequests/nombreTotalPatientsActifs?param="+id;
+            String content = URL + "CustomControllerPrescripteurs/nombreTotalPatientsActifsPrescripteur?param=" + id;
             ResponseEntity<String> response = restTemplate.exchange(
                     content, HttpMethod.GET, entity, String.class);
             if (response.getStatusCode() == HttpStatus.OK) {
@@ -135,22 +308,22 @@ public class PatientServiceApi {
                 nombreTotalPatientsActifs = Integer.parseInt(response.getBody());
             } else {
                 System.out.println(response.getStatusCode());
-                nombreTotalPatientsActifs=0;
+                nombreTotalPatientsActifs = 0;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            nombreTotalPatientsActifs=0;
+            nombreTotalPatientsActifs = 0;
         }
         return nombreTotalPatientsActifs;
     }
 
-    public static int nombreTotalPatientsTelesuivis(long id, String token){
+    public static int nombreTotalPatientsActifsTelesuivisPrescripteur(long id, String token) {
         int nombreTotalPatientsTelesuivis = 0;
-         headers.set("Authorization", "Bearer " + token);
+        headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String content = URL + "customRequests/nombreTotalPatientsTelesuivis?param="+id;
+            String content = URL + "CustomControllerPrescripteurs/nombreTotalPatientsActifsTelesuivisPrescripteur?param=" + id;
             ResponseEntity<String> response = restTemplate.exchange(
                     content, HttpMethod.GET, entity, String.class);
             if (response.getStatusCode() == HttpStatus.OK) {
@@ -158,17 +331,18 @@ public class PatientServiceApi {
                 nombreTotalPatientsTelesuivis = Integer.parseInt(response.getBody());
             } else {
                 System.out.println(response.getStatusCode());
-                nombreTotalPatientsTelesuivis=0;
+                nombreTotalPatientsTelesuivis = 0;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            nombreTotalPatientsTelesuivis=0;
+            nombreTotalPatientsTelesuivis = 0;
         }
         return nombreTotalPatientsTelesuivis;
     }
 
     /**
      * Permet de récupérer un patient à l'aide de son ID
+     *
      * @param id
      * @param token
      * @return

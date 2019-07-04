@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments/head :: head">
 </head>
 <body class="design4">
@@ -8,25 +9,10 @@
     </div>
 </div>
 <div id="page" class="line page design4">
-    <div id="menu_prescripteur">
-        <div style="float: right; width: 10%;">
-            <!--<a class="bouton_deconnexion" th:action="@{/logout}" title="Déconnexion"  href="/logout"></a></div>-->
-            <form th:action="@{/logout}" method="post">
-                <input type="submit" value="Se déconnecter"/>
-            </form>
 
-
-        </div>
-        <div class="grid" style="width: 90%">
-            <ul class="grid4" id="yw4">
-                <li class="menu_prescripteur_accueil active"><a href="/index.php?r=prescripteur/accueil">Espace
-                    prescripteur</a></li>
-                <li><a href="/prescripteur/liste">Patients</a></li>
-                <li><a href="/prescripteur/messages">Messages</a></li>
-                <li><a href="/prescripteur/demandes">Demandes d&#039;intervention</a></li>
-            </ul>
-        </div>
+    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur">
     </div>
+
     <header id="header" role="banner" class="line logo3">
         <span class="prescripteur_bienvenue">Bienvenue Dr <span
                 th:text="${prescripteur.getPersonneById().getNom()}"></span> <span
@@ -34,8 +20,6 @@
     </header>
 
     <div id="main" role="main" class="line  pll prl pbl design4">
-        <!-- A voir ce que ça donne: -->
-        <!-- breadcrumbs -->
 
         <table id="actual-table">
             <tr>
@@ -51,8 +35,8 @@
                             </li>
                             <li><a th:href="@{/prescripteur/listePatientsActifs}"><p><span
                                     th:text="${nombreTotalPatientsActifs}"></span> patients sont actifs.</p></a></li>
-                            <li><a th:href="@{/prescripteur/listePatientsTelesuivis}"><p><span
-                                    th:text="${nombreTotalPatientsTelesuivis}"></span> patients télésuivis.</p></a></li>
+                            <li><a th:href="@{/prescripteur/listePatientsActifsTO}"><p><span
+                                    th:text="${nombreTotalPatientsActifsTelesuivis}"></span> patients télésuivis.</p></a></li>
                         </ul>
                     </div>
                 </td>
@@ -118,7 +102,7 @@
                             </tr>
                             <tr class="even">
                                 <th></th>
-                                <td><span th:text="${adressePrescripteur.getCodePostal()}"></span> <span><span
+                                <td><span th:text="${adressePrescripteur.getCodePostal()}"></span> <span
                                         th:text="${adressePrescripteur.getVille()}"></span></td>
                             </tr>
                         </table>

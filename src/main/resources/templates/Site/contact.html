@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments/headIndex :: head">
 </head>
 <body class="design4">
@@ -8,6 +9,8 @@
     </div>
 </div>
 <div id="page" class="line page design4">
+    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur">
+    </div>
     <div id="main" role="main" class="line  pll prl pbl design4">
         <div class="grid">
             <div class="grid2">

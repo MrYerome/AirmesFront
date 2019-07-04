@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments/headIndex :: head">
 </head>
 <body class="design4">
@@ -8,6 +9,8 @@
     </div>
 </div>
 <div id="page" class="line page design4">
+    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur">
+    </div>
     <div class="line page txtright" style="display: none">
 				<span class="numero_tel">
 					02 41 87 33 53 <span class="h24"><sup>24H</sup>&frasl;<sub>24</sub></span>
@@ -48,7 +51,7 @@
     <div class="footer" th:replace="fragments/footer :: footer">
     </div>
 </div>
-</div>
+
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

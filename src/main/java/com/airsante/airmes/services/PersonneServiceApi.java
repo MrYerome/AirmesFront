@@ -5,17 +5,23 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.airsante.airmes.modelsJson.Prescripteur;
 import com.airsante.airmes.utils.Constantes;
+import com.airsante.airmes.utils.StoreSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.client.Traverson;
 import org.springframework.hateoas.client.Traverson.TraversalBuilder;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import com.airsante.airmes.modelsJson.Personne;
+
+import javax.servlet.http.HttpSession;
 
 public class PersonneServiceApi {
 
@@ -47,11 +53,17 @@ public class PersonneServiceApi {
 		return CollPersonnes;
 	}
 	
-public static Personne findById(long id) {
-		System.out.println("Testing getUser API----------");
-        RestTemplate restTemplate = new RestTemplate();
-        Personne personne = restTemplate.getForObject(URL+"personne/"+id+"?projection=inlinePersonne", Personne.class);
-		return personne;
+public static Personne findById(long id, String token, HttpSession session) {
+	RestTemplate restTemplate = new RestTemplate();
+	headers.set("Authorization", "Bearer " + token);
+	HttpEntity<String> header = new HttpEntity<String>(headers);
+	String content = URL+"personne/"+id+"?projection=inlinePersonne";
+	Personne personne = restTemplate.exchange(content, HttpMethod.GET, header, Personne.class).getBody();
+	System.out.println(personne);
+	StoreSession.storePersonne(session, personne);
+	return personne;
+
+
 }
 	
 }
