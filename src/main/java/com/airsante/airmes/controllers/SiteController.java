@@ -1,5 +1,6 @@
 package com.airsante.airmes.controllers;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RestController
 public class SiteController {
+
+    @Value("${my.url.api}")
+    private String URL;
+
+
+
     /**
      * Permet d'accéder à / ou /index
      * @param modelAndView
@@ -21,6 +28,7 @@ public class SiteController {
     @RequestMapping(value ={"", "/", "index"}, method = RequestMethod.GET)
     public ModelAndView index(ModelAndView modelAndView) {
         modelAndView.setViewName("index");
+        modelAndView.addObject("URL", URL);
         return modelAndView;
     }
 

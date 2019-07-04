@@ -35,6 +35,7 @@ public class StoreSession {
         session.setAttribute("prescripteur", prescripteur);
     }
 
+
     /**
      * A la suite de la connexion, on récupère un token qui sera envoyé pour chaque requête à l'API
      */

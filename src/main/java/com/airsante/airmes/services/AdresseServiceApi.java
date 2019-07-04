@@ -8,6 +8,7 @@ import java.util.Collection;
 
 import com.airsante.airmes.modelsJson.PatientCustom;
 import com.airsante.airmes.utils.Constantes;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,6 +24,7 @@ import org.springframework.hateoas.client.Traverson;
 import org.springframework.hateoas.client.Traverson.TraversalBuilder;
 
 public class AdresseServiceApi {
+
 
 	final static String URL = Constantes.getUrl();
 
@@ -91,6 +93,25 @@ public class AdresseServiceApi {
 //			e.printStackTrace();
 //		}
 
+	}
+
+
+	public static Adresse findAdresseAgence(long id, String token) {
+		RestTemplate restTemplate = new RestTemplate();
+		headers.set("Authorization", "Bearer " + token);
+		HttpEntity<String> header = new HttpEntity<String>(headers);
+		String total = URL + "agence/" + id +"/adresseByAdresseId";
+		Adresse adresse = restTemplate.exchange(total, HttpMethod.GET, header, Adresse.class).getBody();
+		return adresse;
+	}
+
+	public static Adresse findAdressePrescripteur(long id, String token) {
+		RestTemplate restTemplate = new RestTemplate();
+		headers.set("Authorization", "Bearer " + token);
+		HttpEntity<String> header = new HttpEntity<String>(headers);
+		String total = URL + "personne/" + id +"/adresseByAdresseId";
+		Adresse adresse = restTemplate.exchange(total, HttpMethod.GET, header, Adresse.class).getBody();
+		return adresse;
 	}
 
 	public boolean isAdresseExist(Adresse adresse) {

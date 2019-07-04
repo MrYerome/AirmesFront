@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import com.airsante.airmes.utils.Constantes;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resources;
@@ -17,6 +18,7 @@ import com.airsante.airmes.modelsJson.PatientCustom;
 
 
 public class PatientServiceApi {
+
     final static String URL = Constantes.getUrl();
     static HttpHeaders headers = new HttpHeaders();
 

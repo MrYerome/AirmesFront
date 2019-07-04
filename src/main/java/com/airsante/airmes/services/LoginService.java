@@ -2,6 +2,7 @@ package com.airsante.airmes.services;
 
 import com.airsante.airmes.modelsJson.User;
 import com.airsante.airmes.utils.Constantes;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginService {
+
     final static String URL = Constantes.getUrl();
     static HttpHeaders headers = new HttpHeaders();
 

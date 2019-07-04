@@ -1,5 +1,7 @@
 package com.airsante.airmes.controllers;
 
+import com.airsante.airmes.modelsJson.Prescripteur;
+import com.airsante.airmes.services.AdresseServiceApi;
 import com.airsante.airmes.services.PatientServiceApi;
 import com.airsante.airmes.services.PrescripteurServiceApi;
 import com.airsante.airmes.utils.StoreSession;
@@ -27,19 +29,22 @@ public class PrescripteurController {
      */
     @RequestMapping(value = {"prescripteur/index"}, method = RequestMethod.GET)
     public ModelAndView index(ModelAndView modelAndView, HttpSession session) {
-        String token =StoreSession.getToken(session);
+        String token = StoreSession.getToken(session);
         Long idPrescripteur = PrescripteurServiceApi.findByIdentifiant(session.getAttribute("identifiant").toString(), token, session);
-        System.out.println(idPrescripteur);
+        Prescripteur prescripteur = (Prescripteur) session.getAttribute("prescripteur");
         modelAndView.setViewName("Prescripteur/accueilPrescripteur");
         modelAndView.addObject("nombreTotalPatients", PatientServiceApi.nombreTotalPatients(idPrescripteur, token));
         modelAndView.addObject("nombreTotalPatientsActifs", PatientServiceApi.nombreTotalPatientsActifs(idPrescripteur, token));
         modelAndView.addObject("nombreTotalPatientsTelesuivis", PatientServiceApi.nombreTotalPatientsTelesuivis(idPrescripteur, token));
+        modelAndView.addObject("prescripteur", prescripteur);
+        modelAndView.addObject("adresseAgence", AdresseServiceApi.findAdresseAgence(prescripteur.getAgenceByAgenceId().getDataId(), token));
+        modelAndView.addObject("adressePrescripteur", AdresseServiceApi.findAdressePrescripteur(prescripteur.getDataId(), token));
         return modelAndView;
     }
 
-    @RequestMapping(value = {"prescripteur/listePatients", "Prescripteur/listePatients" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"prescripteur/listePatients", "Prescripteur/listePatients"}, method = RequestMethod.GET)
     public ModelAndView listePatients(ModelAndView modelAndView, HttpSession session) {
-        String token =StoreSession.getToken(session);
+        String token = StoreSession.getToken(session);
         Long idPrescripteur = PrescripteurServiceApi.findByIdentifiant(session.getAttribute("identifiant").toString(), token, session);
         System.out.println(idPrescripteur);
         modelAndView.setViewName("Prescripteur/listePatients");

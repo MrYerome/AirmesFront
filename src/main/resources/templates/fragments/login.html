@@ -7,9 +7,9 @@
 <body>
 
 <div class="login" th:fragment="login">
-    Identifié ? <span sec:isAuthenticated()></span><br>
-    Nom de l'utilisateur : <span sec:authentication="name"></span><br>
-    Rôle de l'utilisateur : <span sec:authentication="authorities">[ROLE_USER, ROLE_ADMIN]</span><br>
+    <!--Identifié ? <span sec:isAuthenticated()></span><br>-->
+    <!--Nom de l'utilisateur : <span sec:authentication="name"></span><br>-->
+    <!--Rôle de l'utilisateur : <span sec:authentication="authorities">[ROLE_USER, ROLE_ADMIN]</span><br>-->
 
 
     <div sec:authorize="isAuthenticated()">
@@ -19,17 +19,18 @@
     </div>
 
     <div sec:authorize="!isAuthenticated()">
+
+        <form th:action="@{/login}" method="post">
+            <div><label> Utilisateur : <input type="text" name="username"/> </label></div>
+            <div><label> Mot de passe : <input type="password" name="password"/> </label></div>
+            <div><input type="submit" value="Se connecter"/></div>
+        </form>
         <div th:if="${param.error}">
             Erreur d'identifiant ou de mot de passe
         </div>
         <div th:if="${param.logout}">
             Vous êtes déconnecté !
         </div>
-        <form th:action="@{/login}" method="post">
-            <div><label> Utilisateur : <input type="text" name="username"/> </label></div>
-            <div><label> Mot de passe : <input type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Se connecter"/></div>
-        </form>
     </div>
 
 </div>

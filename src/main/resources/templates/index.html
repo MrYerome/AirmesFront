@@ -2,25 +2,29 @@
 <html lang="fr-FR" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
-<head>
-    <meta charset="utf-8"></meta>
-    <meta http-equiv="Content-Type" content="text/html"></meta>
-    <title>Airsanté</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/knacss.css" media="all">
-    <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
-    <link rel="icon" type="image/png" href="images/favicon-air-sante.png"/>
-
-    <script src="js/jquery-min.js"></script>
-    <script src="js/jquery.sequence-min.js"></script>
-
-    <script type="text/javascript" src="js/jquery.flot.min.js"></script>
-    <script type="text/javascript" src="js/jquery.flot.time.min.js"></script>
-    <script type="text/javascript" src="js/jquery.flot.pie.min.js"></script>
-
-    <script src="js/ckeditor/ckeditor.js"></script>
+<head th:replace="fragments/head :: head">
 </head>
+
+<!--<head>-->
+    <!--<meta charset="utf-8"></meta>-->
+    <!--<meta http-equiv="Content-Type" content="text/html"></meta>-->
+    <!--<title>Airsanté</title>-->
+
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <!--<link rel="stylesheet" type="text/css" href="css/knacss.css" media="all">-->
+    <!--<link rel="stylesheet" type="text/css" href="css/styles.css" media="all">-->
+    <!--<link rel="icon" type="image/png" href="images/favicon-air-sante.png"/>-->
+
+    <!--<script src="js/jquery-min.js"></script>-->
+    <!--<script src="js/jquery.sequence-min.js"></script>-->
+
+    <!--<script type="text/javascript" src="js/jquery.flot.min.js"></script>-->
+    <!--<script type="text/javascript" src="js/jquery.flot.time.min.js"></script>-->
+    <!--<script type="text/javascript" src="js/jquery.flot.pie.min.js"></script>-->
+
+    <!--<script src="js/ckeditor/ckeditor.js"></script>-->
+<!--</head>-->
 
 <body class="design4">
 <div id="bandeau-noir-haut" class="bandeau-noir">
@@ -28,45 +32,325 @@
     </div>
 </div>
 
-<div class="container">
+<!--<div class="container">-->
 
-    <h1>AirMes - Juin 2019 - Déploiement continu</h1>
-    <h2>Version 0.0.2</h2>
+<!--<h1>AirMes - Juin 2019 - Déploiement continu</h1>-->
+<!--<h2>Version 0.0.2</h2>-->
 
-    <h2>Formulaire d'authentification SPRING</h2>
-    <div class="login" th:replace="fragments/login :: login"></div>
-    <div sec:authorize="hasRole('ROLE_ADMIN')">Coucou l'admin !
-        <br>
-        <br>
-        <button>Générer un hash</button>
+<!--<h2>Formulaire d'authentification SPRING</h2>-->
+<!--<div class="login" th:replace="fragments/login :: login"></div>-->
+<!--<div sec:authorize="hasRole('ROLE_ADMIN')">Coucou l'admin !-->
+<!--<br>-->
+<!--<br>-->
+<!--<button>Générer un hash</button>-->
+<!--</div>-->
+<!--<div id="listeLiens" sec:authorize="isAuthenticated()">-->
+<!--<p>Bienvenue dans mon projet front de Spring Boot !</p>-->
+<!--<p>-->
+<!--<a th:href="@{/adresse/listAdresses}">Afficher la liste de toutes les adresses</a>-->
+<!--<a href="/adresse/listAdresses">Afficher la liste de toutes les adresses</a><br>-->
+<!--</p>-->
+<!--<a th:href="@{/adresse/25}">Afficher l'adresse 25</a>-->
+<!--<p>-->
+<!--<a th:href="@{/patient/listPatients}">Afficher la liste des patients</a>-->
+<!--</p>-->
+<!--<p>-->
+<!--<a th:href="@{/patient/191}">Afficher le patient 191</a>-->
+<!--</p>-->
+<!--<p>-->
+<!--<a th:href="@{/patient/listCustomPatients}">Afficher la liste des customPatients</a>-->
+<!--</p>-->
+
+<!--<p>-->
+<!--<a th:href="@{/admin/indexAdmin}">Espace réservé aux admins</a>-->
+<!--</p>-->
+
+<!--</div>-->
+<!--</div>-->
+
+<div id="page" class="line page design4">
+
+    <div class="line page txtright" style="display: none">
+        02 41 87 33 53 <span class="h24"><sup>24H</sup>&frasl;<sub>24</sub> </span>
     </div>
-    <div id="listeLiens" sec:authorize="isAuthenticated()">
-        <p>Bienvenue dans mon projet front de Spring Boot !</p>
-        <p>
-            <a th:href="@{/adresse/listAdresses}">Afficher la liste de toutes les adresses</a>
-            <a href="/adresse/listAdresses">Afficher la liste de toutes les adresses</a><br>
-        </p>
-        <a th:href="@{/adresse/25}">Afficher l'adresse 25</a>
-        <p>
-            <a th:href="@{/patient/listPatients}">Afficher la liste des patients</a>
-        </p>
-        <p>
-            <a th:href="@{/patient/191}">Afficher le patient 191</a>
-        </p>
-        <p>
-            <a th:href="@{/patient/listCustomPatients}">Afficher la liste des customPatients</a>
-        </p>
+    <div class="line espace-vide design5">
 
-        <p>
-            <a th:href="@{/admin/indexAdmin}">Espace réservé aux admins</a>
-        </p>
+
+        <div id="sequence" class="sequence-accueil design5">
+            <ul class="sequence-canvas">
+
+                <li class="animate-in">
+                    <div class="info-accueil apneedusommeil design5">
+                        <p>APNEE DU SOMMEIL</p>
+                    </div>
+                    <img class="img-accueil"
+                         src="images/Fotolia_55957335_L-petit.jpg" alt="Apnée du someil"/>
+                </li>
+                <li>
+                    <div class="info-accueil ventilation design5">
+                        <p>VENTILATION</p>
+                    </div>
+                    <img class="img-accueil"
+                         src="images/Fotolia_45373549_S.jpg" alt="Ventilation"/>
+                </li>
+                <li>
+                    <div class="info-accueil oxygenotherapie design3">
+                        <p>OXYGENOTHERAPIE</p>
+                    </div>
+                    <img class="img-accueil" src="images/Cryopal-Freelox.jpg"
+                         alt="Oxygénothérapie"/>
+                </li>
+                <li>
+                    <div class="info-accueil aerosoltherapie design3">
+                        <p>AEROSOLTHERAPIE</p>
+                    </div>
+                    <img class="img-accueil"
+                         src="images/Fotolia_60896635_S.jpg" alt="Aérosolthérapie"/>
+                </li>
+            </ul>
+        </div>
+
+        <header id="header" role="banner" class="line logo3 design5"></header>
+        <h2 th:utext="${URL}">..!..</h2>
+
+        <div id="login" class="design5 mod">
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post">
+                    <input class="line right w60 mrs" type="submit" value="Se déconnecter"/>
+                </form>
+            </div>
+
+            <div sec:authorize="!isAuthenticated()">
+
+                <form id="login-form" th:action="@{/login}" method="post">
+                    <input class="line right w60 mrs mts" placeholder="Identifiant" type="text" name="username"/>
+                    <input class="line right w60 mrs mt2px" type="password" name="password" placeholder="Mot de passe"/>
+                    <input class="line right w60 mrs" type="submit" value="Se connecter"/>
+                </form>
+                <div th:if="${param.error}">
+                    Erreur d'identifiant ou de mot de passe
+                </div>
+                <div th:if="${param.logout}">
+                    Vous êtes déconnecté !
+                </div>
+                <span><a href="index.php?r=site/creationEspacePatient"><button
+                        class="line right w60 mrs">Créer mon espace patient</button> </a>
+				</span>
+            </div>
+
+
+        </div>
+
 
     </div>
+    <div class="txtright numero-design5">
+
+        <img alt="02 41 87 33 53" src="./images/numero-tel-air-sante.png"/>
+    </div>
+
+    <div class="line"></div>
+
+    <div id="main" role="main" class="line  pll prl pbl design4">
+
+        <div class='pageweb'>
+            <hr/>
+            <p>Bienvenue sur le site d&rsquo;<strong>Air Sant&eacute;</strong>, <u>Prestataire de Sant&eacute; &agrave;
+                Domicile ind&eacute;pendant</u>, sp&eacute;cialis&eacute; dans l&rsquo;assistance respiratoire</p>
+
+            <ul style="margin-left:40px">
+                <li><span style="color:#009FE3"><strong>Apn&eacute;e du sommeil</strong></span></li>
+                <li><span style="color:#009FE3"><strong>Ventilation</strong></span></li>
+                <li><strong><span style="color:#009FE3">Oxyg&eacute;noth&eacute;rapie</span></strong></li>
+                <li><strong><span style="color:#009FE3">A&eacute;rosolth&eacute;rapie</span></strong></li>
+            </ul>
+
+            <p>Sur prescription m&eacute;dicale, nos &eacute;quipes vous accompagnent tout au long de votre
+                traitement</p>
+
+            <ul style="margin-left:40px">
+                <li><strong><span
+                        style="color:#009FE3">Appareillage &agrave; domicile ou en milieu hospitalier</span></strong>
+                </li>
+                <li><strong><span style="color:#009FE3">Dossier administratif</span></strong></li>
+                <li><strong><span style="color:#009FE3">Suivi technique</span></strong></li>
+                <li><strong><span style="color:#009FE3">Lien avec le m&eacute;decin prescripteur</span></strong></li>
+                <li><strong><span style="color:#009FE3">Assistance technique d&rsquo;urgence 24/24h</span></strong></li>
+            </ul>
+
+            <br/>
+
+            Air Sant&eacute; est certifi&eacute; <strong>ISO 9001</strong></p>
+            <br/>
+            <p><img alt="" src="/js/kcfinder/upload/images/BV_Certification_ISO9001_100.png"
+                    style="float:left; height:100px; width:192px"/></p>
+        </div>
+
+
+    </div>
+
+
 </div>
-
 
 <div class="footer" th:replace="fragments/footer :: footer">
 </div>
+
+
+<script type="text/javascript">
+    var ready = true;
+
+    $(document).ready(function () {
+
+        var options = {
+            autoPlay: true, //use Sequence's autoPlay feature
+            autoPlayDelay: 2000, //8000 pour les fêtes
+            pauseOnHover: false
+            //Sequence options go here. See here: http://www.sequencejs.com/documentation.html#developers
+        }
+
+        var sequence = $("#sequence").sequence(options).data("sequence");
+
+        //initialisation de l'animation sur les articles.
+        //s'il y a plus de 3 articles, on lance la routine
+        var nbArticle = $('.liste-articles li').length;
+
+        if (nbArticle > 3) {
+            //setTimeout(animationListeArticle,1000);
+            setInterval(function () {
+                animationListeArticle(500);
+            }, 5000);
+
+            //initialisation des boutons
+            $('.la-bt-prev').click(function () {
+                animationListeArticle(100);
+            });
+
+            $('.la-bt-next').click(function () {
+                animationListeArticleBackToPast(100);
+            });
+        }
+        else {
+            $('.la-bt-prev').hide();
+            $('.la-bt-next').hide();
+
+
+            if (nbArticle <= 2) {
+                $('.espace-vide').css('height', (parseInt($('.espace-vide').css('height'), 10) - 30) + "px");
+            }
+        }
+    });
+
+    //annimation des articles
+    $.fn.disparaitre = function (vitesse) {
+        $(this).animate({
+                left: $(this).width() + "px",
+                opacity: 0,
+            },
+            vitesse
+        );
+        //$(this).removeClass('la-first').addClass('la-hidden');
+        $(this).removeClass('la-current').addClass('la-hidden');
+    }
+
+    $.fn.disparaitreEnBas = function (vitesse) {
+        $(this).animate({
+                left: $(this).width() + "px",
+                opacity: 0,
+            },
+            vitesse
+        );
+        $(this).removeClass('la-current').addClass('la-next');
+    }
+
+    $.fn.apparaitre = function (vitesse) {
+        $(this).attr('style', 'display:block;opacity:0');
+        $(this).animate({
+                top: "-63px",
+                opacity: 1,
+            },
+            vitesse
+        );
+        $(this).removeClass('la-next').addClass('la-current');
+    }
+
+    $.fn.apparaitreEnHaut = function (vitesse) {
+        var top = ($('.liste-articles li').length) * 63; //63 = taille des blocks avec la marge
+        //alert(top);
+        $(this).attr('style', 'display:block;opacity:0;top:-' + top + 'px');
+        $(this).animate({
+                top: (-top + 63) + "px",
+                opacity: 1,
+            },
+            vitesse
+        );
+        $(this).removeClass('la-next').addClass('la-current');
+    }
+
+    function animationListeArticle(vitesse) {
+        if (ready) {
+            ready = false;
+            //faire disparaitre le 1er article
+            //$('.la-first').disparaitre(vitesse);
+            $('.liste-articles li:first').disparaitre(vitesse);
+
+            //réhaussez les articles suivants
+            $('.la-current').each(function (i, element) {
+                setTimeout(function () {
+                    $(element).animate({
+                        top: "-63px",
+                    }, vitesse - (vitesse * 10 / 100));
+                }, vitesse + (i * vitesse));
+            });
+
+            //faire apparaitre le suivant
+            setTimeout(function () {
+                $('.la-next:first').apparaitre(vitesse);
+            }, vitesse * 3);
+
+            //Changement des classes après tous les mouvements
+            setTimeout(function () {
+                $('.liste-articles li:first').insertAfter($('.liste-articles li:last')).removeClass('la-hidden').addClass('la-next');
+                //$('.liste-articles li:first').removeClass('la-current').addClass('la-first');
+                $('.liste-articles li').each(function (i, element) {
+                    $(element).attr('style', 'top:0px');
+                });
+                ready = true;
+            }, vitesse * 5);
+        }
+    }
+
+    function animationListeArticleBackToPast(vitesse) {
+        if (ready) {
+            ready = false;
+            //faire disparaitre le dernier article
+            $('.la-current:last').disparaitreEnBas(vitesse);
+
+            //abaisser les articles suivants
+            $($('.la-current').get().reverse()).each(function (i, element) {
+                setTimeout(function () {
+                    $(element).animate({
+                        top: "+63px",
+                    }, vitesse - (vitesse * 10 / 100));
+                }, vitesse + (i * vitesse));
+            });
+
+            //faire apparaitre le précédent (dernier de la liste)
+            setTimeout(function () {
+                $('.la-next:last').apparaitreEnHaut(vitesse);
+            }, vitesse * 3);
+
+            //Changement des classes après tous les mouvements
+            setTimeout(function () {
+                $('.liste-articles li:last').insertBefore($('.liste-articles li:first'));
+                //$('.liste-articles li:first').removeClass('la-current').addClass('la-first');
+                $('.liste-articles li').each(function (i, element) {
+                    $(element).attr('style', 'top:0px');
+                });
+                ready = true;
+            }, vitesse * 5);
+        }
+    }
+</script>
+
 </body>
 
 
