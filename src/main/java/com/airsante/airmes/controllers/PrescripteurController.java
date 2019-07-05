@@ -6,6 +6,7 @@ import com.airsante.airmes.services.AdresseServiceApi;
 import com.airsante.airmes.services.PatientServiceApi;
 import com.airsante.airmes.services.PrescripteurServiceApi;
 import com.airsante.airmes.utils.StoreSession;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,6 +80,21 @@ public class PrescripteurController {
         }
         else {return  PatientServiceApi.findPatientsActifsTOPrescripteur(idPrescripteur,  token);
         }
+    }
+
+
+    /**
+     * Affiche un patient
+     * @param id
+     * @param modelAndView
+     * @return
+     */
+    @RequestMapping(value = "/prescripteur/patient/{id}", method = RequestMethod.GET)
+    public ModelAndView patientSingle(@PathVariable("id") int id, ModelAndView modelAndView, HttpSession session) {
+        String token = StoreSession.getToken(session);
+        modelAndView.setViewName("Patient/patient");
+        modelAndView.addObject("patient", PatientServiceApi.findById(id, token));
+        return modelAndView;
     }
 
 }

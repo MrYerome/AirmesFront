@@ -1,20 +1,37 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments/head :: head">
 </head>
-<body>
+<body class="design4">
+<div id="bandeau-noir-haut" class="bandeau-noir">
+    <div th:replace="fragments/navbar :: navbar">
+    </div>
+</div>
+
+<div id="page" class="line page design4">
+
+    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur">
+    </div>
+    <div sec:authorize="hasRole('ROLE_USER')" th:replace="fragments/menuUtilisateur :: menuUtilisateur">
+    </div>
+
+    <div id="main" role="main" class="line  pll prl pbl design4">
 
 
-	<h2 th:text="${patient.personneById.nom}">Nom : </h2>
-	<h2 th:text="${patient.personneById.prenom}">Nom : </h2>
-	<h2 th:text="${patient.personneById.dateNaissance}">Nom : </h2>
-	<h2 th:text="${patient.personneById.telDomicile}">Nom : </h2>
-	<h2 th:text="${patient.statutDossier}">Nom : </h2>
 
-	
 
+
+    </div>
+
+
+    <div class="footer" th:replace="fragments/footer :: footer">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#listPatients').DataTable();
+    });
+</script>
 </body>
 </html>

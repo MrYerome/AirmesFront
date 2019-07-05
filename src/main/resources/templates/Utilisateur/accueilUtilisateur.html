@@ -20,18 +20,26 @@
     </header>
 
     <div id="main" role="main" class="line  pll prl pbl design4">
-
-        <ul>
-            <li>
-                <a th:href="@{/utilisateur/listePatients}"><p><span
-                        th:text="${nombreTotalPatients}"></span> patients (actifs ou non).
-                </p></a>
-            </li>
-            <li><a th:href="@{/utilisateur/listePatientsActifs}"><p><span
-                    th:text="${nombreTotalPatientsActifs}"></span> patients sont actifs.</p></a></li>
-            <li><a th:href="@{/utilisateur/listePatientsActifsTO}"><p><span
-                    th:text="${nombreTotalPatientsTelesuivis}"></span> patients télésuivis.</p></a></li>
-        </ul>
+        <table id="actual-table">
+            <tr>
+                <td class="pr" colspan="1">
+                    <h3 class="prescripteur_accueil_patient">Dossiers Patients</h3>
+                    <div>
+                        <ul>
+                            <li>
+                                <a th:href="@{/utilisateur/listePatients}"><p><span
+                                        th:text="${nombreTotalPatients}"></span> patients (actifs ou non).
+                                </p></a>
+                            </li>
+                            <li><a th:href="@{/utilisateur/listePatientsActifs}"><p><span
+                                    th:text="${nombreTotalPatientsActifs}"></span> patients sont actifs.</p></a></li>
+                            <li><a th:href="@{/utilisateur/listePatientsActifsTO}"><p><span
+                                    th:text="${nombreTotalPatientsTelesuivis}"></span> patients télésuivis.</p></a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
     <div class="footer" th:replace="fragments/footer :: footer">
     </div>

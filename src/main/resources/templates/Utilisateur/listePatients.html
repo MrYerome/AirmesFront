@@ -10,13 +10,10 @@
 </div>
 <div id="page" class="line page design4">
 
-    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur">
+    <div sec:authorize="hasRole('ROLE_USER')" th:replace="fragments/menuUtilisateur :: menuUtilisateur">
     </div>
-
     <div id="main" role="main" class="line  pll prl pbl design4">
-        <h1>Liste de vos patients</h1>
-
-        <p>Vous avez <span th:text="${#lists.size(listPatientsUtilisateur)}"> patients actifs.</span></p>
+        <h3><span th:text="${#lists.size(listPatientsUtilisateur)}"> </span> <span th:text="${typeCategorie}"></span></h3>
 
         <div style="cursor: pointer;" id="patient-grid" class="grid-view">
 
