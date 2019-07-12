@@ -63,7 +63,6 @@ public static Personne findById(long id, String token, HttpSession session) {
 	StoreSession.storePersonne(session, personne);
 	return personne;
 
-
 }
 	
 }

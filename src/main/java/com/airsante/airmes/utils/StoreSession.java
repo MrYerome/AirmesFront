@@ -49,6 +49,10 @@ public class StoreSession {
         session.setAttribute("prescripteur", prescripteur);
     }
 
+    public static Prescripteur getPrescripteur(HttpSession session) {
+        return (Prescripteur) session.getAttribute("prescripteur");
+    }
+
     public static void storeUtilisateur(HttpSession session, Utilisateur utilisateur) {
         session.setAttribute("utilisateur", null);
         session.setAttribute("utilisateur", utilisateur);

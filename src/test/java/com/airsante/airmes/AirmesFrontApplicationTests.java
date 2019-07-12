@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 
 
@@ -58,7 +59,22 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AirmesFrontApplicationTests extends TestCase {
-/*
+
+    private HttpServletRequest request ;
+
+
+    @Test
+    public void recupURL() {
+        String returnPage = ServletUriComponentsBuilder.fromCurrentContextPath().toString();
+        System.out.println("returnPage = "+ returnPage.toString());
+        System.out.println("request " + request.getRequestURL().toString()) ;
+        System.out.println("request " +  request.getQueryString());
+    }
+
+
+
+
+    /*
     @Test
     public void findById() {
         int id = 190;
@@ -282,21 +298,21 @@ public class AirmesFrontApplicationTests extends TestCase {
         /**
          * Test du décryptage en SHA1
          */
-    @Test
+ //   @Test
 //    public void matches(CharSequence rawPassword, String encodedPassword) {
-    public void matches2() {
-        String rawPassword = "VenT@i3$an734-9airsante";
-        String encodedPassword ="524df7ddcaa668e2249e24fcd87a79a5b4bb1f04";
-        try {
-            String mdpCrypte = DigestUtils.sha1Hex("VenT@i3$an734-9airsante");
-            System.out.println(mdpCrypte);
-            assertEquals(encodedPassword, mdpCrypte);
-        } catch (Exception e) {
-            e.printStackTrace();
-            //return false;
-        }
-
-    }
+//    public void matches2() {
+//        String rawPassword = "VenT@i3$an734-9airsante";
+//        String encodedPassword ="524df7ddcaa668e2249e24fcd87a79a5b4bb1f04";
+//        try {
+//            String mdpCrypte = DigestUtils.sha1Hex("VenT@i3$an734-9airsante");
+//            System.out.println(mdpCrypte);
+//            assertEquals(encodedPassword, mdpCrypte);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            //return false;
+//        }
+//
+//    }
 //
 //    /**
 //     * Test de l'encryptage en SHA1

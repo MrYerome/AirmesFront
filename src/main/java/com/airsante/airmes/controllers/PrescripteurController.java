@@ -1,5 +1,7 @@
 package com.airsante.airmes.controllers;
 
+import com.airsante.airmes.modelsJson.Adresse;
+import com.airsante.airmes.modelsJson.Patient;
 import com.airsante.airmes.modelsJson.PatientCustom;
 import com.airsante.airmes.modelsJson.Prescripteur;
 import com.airsante.airmes.services.AdresseServiceApi;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
@@ -50,6 +54,7 @@ public class PrescripteurController {
         modelAndView.setViewName("Prescripteur/listePatients");
         modelAndView.addObject("listPatientsPrescripteur", getPatientsPrescripteursByContext(session, null, 0));
         modelAndView.addObject("typeCategorie", " patients (actifs ou non).");
+
         return modelAndView;
     }
 
@@ -66,6 +71,7 @@ public class PrescripteurController {
         modelAndView.setViewName("Prescripteur/listePatients");
         modelAndView.addObject("typeCategorie", " patients actifs et télé-observants.");
         modelAndView.addObject("listPatientsPrescripteur", getPatientsPrescripteursByContext(session, "en cours", 1));
+        System.out.println(getPatientsPrescripteursByContext(session, "en cours", 1));
         return modelAndView;
     }
 
@@ -90,10 +96,20 @@ public class PrescripteurController {
      * @return
      */
     @RequestMapping(value = "/prescripteur/patient/{id}", method = RequestMethod.GET)
-    public ModelAndView patientSingle(@PathVariable("id") int id, ModelAndView modelAndView, HttpSession session) {
+    public ModelAndView patientSingle(@PathVariable("id") int id, ModelAndView modelAndView, HttpSession session, HttpServletRequest request) {
         String token = StoreSession.getToken(session);
+        Patient patient = PatientServiceApi.findById(id, token);
+        PatientCustom patientCustom = PatientServiceApi.findOneCustomPatients(patient.getDataId(), token);
         modelAndView.setViewName("Patient/patient");
-        modelAndView.addObject("patient", PatientServiceApi.findById(id, token));
+        Adresse adresse = AdresseServiceApi.findAdressePersonne(patient.getDataId(), token);
+        System.out.println("patient = " + patient);
+        modelAndView.addObject("patient", patient);
+        modelAndView.addObject("patientCustom", patientCustom);
+        modelAndView.addObject("returnPage", request.getHeader("referer"));// on récupère l'URL de la page précédente
+        modelAndView.addObject("prescripteur", StoreSession.getPrescripteur(session));//on récupère le prescripteur pour les liens
+        modelAndView.addObject("adresse", adresse);
+        System.out.println( adresse.getVille());
+       // modelAndView.addObject("materiel", MaterielServiceApi.findMateriel(patient.getDataId(), token));
         return modelAndView;
     }
 

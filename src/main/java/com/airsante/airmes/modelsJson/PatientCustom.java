@@ -8,7 +8,9 @@ import org.springframework.hateoas.ResourceSupport;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
-public class PatientCustom extends ResourceSupport {
+public class PatientCustom
+		extends ResourceSupport
+{
 	private Link id;
 	private Long dataId;
 	private String nom;
@@ -125,7 +127,7 @@ public class PatientCustom extends ResourceSupport {
 
 	@Override
 	public String toString() {
-		return "PatientCustom [id=" + id + ", dataId=" + dataId + ", nom=" + nom + ", prenom=" + prenom + ", ville="
+		return "PatientCustom [id=" + id + "dataId = " + dataId +", nom=" + nom + ", prenom=" + prenom + ", ville="
 				+ ville + ", numeroSecu=" + numeroSecu + ", dateInstallation=" + dateInstallation
 				+ ", dateDerniereInter=" + dateDerniereInter + ", dateProchaineInter=" + dateProchaineInter
 				+ ", moyenneMois=" + moyenneMois + ", statutDossier=" + statutDossier + "]";

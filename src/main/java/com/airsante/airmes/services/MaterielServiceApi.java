@@ -1,11 +1,8 @@
 package com.airsante.airmes.services;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-
+import com.airsante.airmes.modelsJson.Patient;
+import com.airsante.airmes.modelsJson.PatientCustom;
 import com.airsante.airmes.utils.Constantes;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resources;
@@ -13,11 +10,14 @@ import org.springframework.hateoas.client.Traverson;
 import org.springframework.hateoas.client.Traverson.TraversalBuilder;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-import com.airsante.airmes.modelsJson.Patient;
-import com.airsante.airmes.modelsJson.PatientCustom;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
-public class PatientServiceApi {
+public class MaterielServiceApi {
 
     final static String URL = Constantes.getUrl();
     static HttpHeaders headers = new HttpHeaders();
