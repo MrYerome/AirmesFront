@@ -1,19 +1,13 @@
 package com.airsante.airmes.controllers;
 
-import com.airsante.airmes.modelsJson.Adresse;
-import com.airsante.airmes.modelsJson.Patient;
-import com.airsante.airmes.modelsJson.PatientCustom;
-import com.airsante.airmes.modelsJson.Prescripteur;
-import com.airsante.airmes.services.AdresseServiceApi;
-import com.airsante.airmes.services.PatientServiceApi;
-import com.airsante.airmes.services.PrescripteurServiceApi;
+import com.airsante.airmes.modelsJson.*;
+import com.airsante.airmes.services.*;
 import com.airsante.airmes.utils.StoreSession;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -102,14 +96,18 @@ public class PrescripteurController {
         PatientCustom patientCustom = PatientServiceApi.findOneCustomPatients(patient.getDataId(), token);
         modelAndView.setViewName("Patient/patient");
         Adresse adresse = AdresseServiceApi.findAdressePersonne(patient.getDataId(), token);
+        Collection<ParcMaterielPatient> materiels = MaterielServiceApi.findMateriel(patient.getDataId(), token);
+        Collection<Intervention> interventions = InterventionServiceApi.findAllInterventions (patient.getDataId(),token);
         System.out.println("patient = " + patient);
         modelAndView.addObject("patient", patient);
         modelAndView.addObject("patientCustom", patientCustom);
         modelAndView.addObject("returnPage", request.getHeader("referer"));// on récupère l'URL de la page précédente
         modelAndView.addObject("prescripteur", StoreSession.getPrescripteur(session));//on récupère le prescripteur pour les liens
         modelAndView.addObject("adresse", adresse);
-        System.out.println( adresse.getVille());
-       // modelAndView.addObject("materiel", MaterielServiceApi.findMateriel(patient.getDataId(), token));
+        modelAndView.addObject("materiels", materiels);
+        System.out.println(materiels);
+        modelAndView.addObject("interventions", interventions);
+
         return modelAndView;
     }
 

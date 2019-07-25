@@ -96,6 +96,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/personne/**").authenticated()
                 .antMatchers("/adresse/**").authenticated()
                 .antMatchers("/prescripteur/**").access("hasAnyRole('ADMIN', 'PRESCRIPTEUR')")
+                .antMatchers("/prescripteur/**").access("hasAnyRole('ADMIN', 'PRESCRIPTEUR')")
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .and()
                 .formLogin()
@@ -133,7 +134,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                         redirection = "/utilisateur/index";
                                         break;
                                     case "ROLE_PRESCRIPTEUR":
-                                        redirection = "/prescripteur/index";
+//                                        redirection = "/prescripteur/index";
+                                        redirection = "/prescripteur/listePatientsActifsTO";
                                         break;
                                     case "ROLE_PATIENT":
                                         redirection = "/patient/index";

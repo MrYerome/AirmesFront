@@ -1,23 +1,27 @@
 package com.airsante.airmes.services;
 
+import com.airsante.airmes.modelsJson.Intervention;
 import com.airsante.airmes.modelsJson.ParcMaterielPatient;
 import com.airsante.airmes.modelsJson.ListeId;
 import com.airsante.airmes.utils.Constantes;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 
-public class MaterielServiceApi {
+public class InterventionServiceApi {
 
     final static String URL = Constantes.getUrl();
     static HttpHeaders headers = new HttpHeaders();
 
-    static Collection<ListeId> CollMateriels = new ArrayList<ListeId>();
-    static Collection<ParcMaterielPatient> pmpColl = new ArrayList<ParcMaterielPatient>();
+    static Collection<ListeId> CollIdInter = new ArrayList<ListeId>();
+    static Collection<Intervention> interventionsColl = new ArrayList<Intervention>();
 
 
     /**
@@ -27,32 +31,34 @@ public class MaterielServiceApi {
      * @param token
      * @return
      */
-    public static Collection<ParcMaterielPatient> findMateriel(long id, String token) {
+    public static Collection<Intervention> findAllInterventions(long id, String token) {
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String content = URL + "CustomControllerMateriel/listePmpByIdPatient?param=" + id;
+            String content = URL + "CustomControllerIntervention/listeIdInterventionsByIdPatient?param=" + id;
             System.out.println(content);
             ResponseEntity<Collection<ListeId>> response = restTemplate.exchange(
                     content, HttpMethod.GET, entity,
                     new ParameterizedTypeReference<Collection<ListeId>>() {
                     });
-            CollMateriels = response.getBody();
+            CollIdInter = response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        pmpColl.clear();
-        for (ListeId m : CollMateriels
+        interventionsColl.clear();
+        for (ListeId m : CollIdInter
         ) {
             RestTemplate restTemplate = new RestTemplate();
-            String total = URL + "parc_materiel_patient/" + m.getDataId();
-            ParcMaterielPatient pmp = restTemplate.exchange(total, HttpMethod.GET, entity, ParcMaterielPatient.class).getBody();
-            pmpColl.add(pmp);
+            String total = URL + "intervention/" + m.getDataId();
+            Intervention inter = restTemplate.exchange(total, HttpMethod.GET, entity, Intervention.class).getBody();
+            interventionsColl.add(inter);
         }
 
-        return pmpColl;
+
+         System.out.println("liste des inters : " + interventionsColl);
+        return interventionsColl;
 
 
     }

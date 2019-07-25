@@ -18,17 +18,105 @@
 
     <div id="main" role="main" class="line  pll prl pbl design4">
 
+        <!-- ############################################################################################################### -->
+        <script type="text/javascript">
 
+            $(function () {
+
+                $('#patient-interventions-grid tbody tr:first').addClass("selected");
+                $('.getVisible').hide();
+                $('.getVisible:first').show();
+                $('.getMesureVisible:first').show();
+                $('.getReglageVisible:first').show();
+                $('.fichierpdf:first').show();
+
+            });
+
+            function addSelected(index) {
+                // console.log(index);
+                $('#patient-interventions-grid tbody tr').click(function () {
+                    $('#patient-interventions-grid tbody tr').removeClass('selected');
+                    $(this).addClass('selected'); // Note, will not add the same class more than once
+                });
+                // $('.observation').text(index);
+                //$('#spanObservation').replaceWith('<span id="spanObservation" th:text="${interventions[' + index + '].observation}"></p>');
+                displayObs(index);
+            }
+
+            function displayObs(index) {
+                $('.getVisible').hide();
+                $('#observation' + index).fadeIn(400);
+                $('.getMesureVisible').hide();
+                $('#tableMesure' + index).fadeIn(400);
+                $('.getReglageVisible').hide();
+                $('#tableReglage' + index).fadeIn(400);
+                $('.fichierpdf').hide();
+                $('#fichierpdf' + index).fadeIn(400);
+
+            }
+
+
+            // function addSelected(){
+            //     $('#patient-interventions-grid tbody tr:first').removeClass("selected");
+            //     $('#patient-interventions-grid tbody tr').addClass("selected");
+            // };
+
+
+            // jQuery.browser (or $.browser) has been deprecated since version 1.3 and has been removed since version 1.9.
+            // le code suivant fixe le problÃ¨me en cas d'utilisation d'un plugin. C'est le cas ici avec le datePicker
+            var matched, browser;
+
+            jQuery.uaMatch = function (ua) {
+                ua = ua.toLowerCase();
+
+                var match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
+                    /(webkit)[ \/]([\w.]+)/.exec(ua) ||
+                    /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
+                    /(msie) ([\w.]+)/.exec(ua) ||
+                    ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) ||
+                    [];
+
+                return {
+                    browser: match[1] || "",
+                    version: match[2] || "0"
+                };
+            };
+
+            matched = jQuery.uaMatch(navigator.userAgent);
+            browser = {};
+
+            if (matched.browser) {
+                browser[matched.browser] = true;
+                browser.version = matched.version;
+            }
+
+            // Chrome is Webkit, but Webkit is also Safari.
+            if (browser.chrome) {
+                browser.webkit = true;
+            } else if (browser.webkit) {
+                browser.safari = true;
+            }
+
+            jQuery.browser = browser;
+
+
+        </script>
+
+        <!-- ############################################################################################################### -->
 
 
         <div id="patient_fiche">
 
 
             <a class="boutonCss no-print" th:href="@{'' + ${returnPage}}">Retour</a><a
-                class="boutonCssVert no-print"  th:href="@{'/prescripteur/message/create/' + ${prescripteur.dataId}}" >Envoyer un message</a><a
-                class="boutonCssBleu no-print" th:href="@{'/prescripteur/intervention/demande/' + ${prescripteur.dataId}}">Demander une intervention</a>
+                class="boutonCssVert no-print" th:href="@{'/prescripteur/message/create/' + ${prescripteur.dataId}}">Envoyer
+            un message</a><a
+                class="boutonCssBleu no-print"
+                th:href="@{'/prescripteur/intervention/demande/' + ${prescripteur.dataId}}">Demander une
+            intervention</a>
             <div id="patient_info">
-                <h1 id="nom_patient"><span th:text="${patient.getPersonneById().getNom()}"></span> <span th:text="${patient.getPersonneById().getPrenom()}"></span></h1>
+                <h1 id="nom_patient"><span th:text="${patient.getPersonneById().getNom()}"></span> <span
+                        th:text="${patient.getPersonneById().getPrenom()}"></span></h1>
 
                 <div class="grid">
                     <div class="grid2">
@@ -43,7 +131,8 @@
                                     </tr>
                                     <tr class="even">
                                         <th></th>
-                                        <td><span th:text="${adresse.codePostal}" ></span> <span th:text="${adresse.ville}"></span></td>
+                                        <td><span th:text="${adresse.codePostal}"></span> <span
+                                                th:text="${adresse.ville}"></span></td>
                                     </tr>
                                 </table>
                                 <table class="detail-view" id="yw1">
@@ -76,15 +165,17 @@
                                 <div class="summary"></div>
                                 <table class="items">
                                     <tbody>
-                                    <tr class="odd">
-                                        <td style="width:380px;">S10 Autoset</td>
-                                        <td>30/06/2015</td>
+
+                                    <tr th:each="materiel, status : ${materiels}"
+                                        th:class="${status.odd} ? 'odd' : 'even'">
+                                        <td style="width:300px;"
+                                            th:text="${materiel.parcMaterielByParcMaterielId.articleByArticleId.nom}"></td>
+                                        <td th:text="${#dates.format(materiel.getDateLivraison(),'dd MMMMM yyyy')}"></td>
                                     </tr>
+
                                     </tbody>
                                 </table>
-                                <div class="keys" style="display:none"
-                                     title="/index.php?r=patient/fiche&amp;id=6949&amp;page=1&amp;teleobs=1&amp;actif=1&amp;obs=&amp;nonobs=&amp;u=">
-                                    <span>18564</span></div>
+
                             </div>
                         </div>
                     </div>
@@ -92,13 +183,16 @@
 
                 <h3 id="titre-intervention">
                     Intervention -
-                    VISITE ANNUELLE du 16/10/2018 par GERE Virginie </h3>
+                    <span th:text="${interventions[0].typeInterventionByTypeInterventionId.label}"></span>
+                    du <span th:text="${#dates.format(interventions[0].dateRealisation, 'dd MMMMM yyyy')}"></span></h3>
                 <div class="grid">
                     <div class="grid1-3">
+                        <!-- ############################################################################################################### -->
                         <!-- liste des interventions -->
                         <div id="liste-intervention" class="designPatient no-print">
                             <div style="cursor: pointer;" id="patient-interventions-grid" class="grid-view">
                                 <div class="summary"></div>
+
                                 <table class="items">
                                     <thead>
                                     <tr>
@@ -107,83 +201,58 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="odd">
-                                        <td>16/10/2018</td>
-                                        <td>VISITE ANNUELLE</td>
+
+                                    <tr
+                                            th:each="intervention, status : ${interventions}"
+                                            th:id="liste+${status.index}"
+                                            th:class="${status.odd} ? 'odd' : 'even'"
+                                            th:onclick="'javascript:addSelected(\''+ ${status.index} +'\');'">
+                                        <td style="width:300px;"
+                                            th:text="${#dates.format(intervention.dateRealisation, 'dd MM yy')}"></td>
+                                        <td th:text="${#strings.toUpperCase(intervention.typeInterventionByTypeInterventionId.label)}"></td>
                                     </tr>
-                                    <tr class="even">
-                                        <td>29/05/2018</td>
-                                        <td>RELEVE A DISTANCE</td>
-                                    </tr>
-                                    <tr class="odd">
-                                        <td>17/04/2018</td>
-                                        <td>MESSAGE</td>
-                                    </tr>
-                                    <tr class="even">
-                                        <td>17/05/2017</td>
-                                        <td>VISITE SEMESTRIELLE</td>
-                                    </tr>
-                                    <tr class="odd">
-                                        <td>13/12/2016</td>
-                                        <td>VISITE SEMESTRIELLE</td>
-                                    </tr>
-                                    <tr class="even">
-                                        <td>11/08/2016</td>
-                                        <td>VISITE SEMESTRIELLE</td>
-                                    </tr>
-                                    <tr class="odd">
-                                        <td>11/12/2015</td>
-                                        <td>VISITE D&#039;ADAPTATION</td>
-                                    </tr>
-                                    <tr class="even">
-                                        <td>04/09/2015</td>
-                                        <td>VISITE SOUS 1 MOIS</td>
-                                    </tr>
-                                    <tr class="odd">
-                                        <td>30/07/2015</td>
-                                        <td>VISITE SOUS 15 JOURS</td>
-                                    </tr>
-                                    <tr class="even">
-                                        <td>30/06/2015</td>
-                                        <td>INSTALLATION VPPC</td>
-                                    </tr>
+
                                     </tbody>
                                 </table>
+
                                 <div class="keys" style="display:none"
                                      title="/index.php?r=patient/fiche&amp;id=6949&amp;page=1&amp;teleobs=1&amp;actif=1&amp;obs=&amp;nonobs=&amp;u=">
                                     <span>96428</span><span>111226</span><span>108824</span><span>79526</span><span>72073</span><span>72071</span><span>48193</span><span>46883</span><span>46884</span><span>45513</span>
                                 </div>
                             </div>
                         </div>
-
+                        <!-- ############################################################################################################### -->
                         <!-- Interventions -->
                         <div id="intervention" class="designPatient">
                             <!-- Observations et documents -->
                             <div class="grid">
                                 <div class="grid2">
-                                    <!-- Observtion -->
+                                    <!-- Observation -->
                                     <div>
                                         <h4>Observation</h4>
-                                        <p class="observation">Monsieur ALBERT suit bien son traitement. L'observance
-                                            est bonne. L'IAH est corrigé et les fuites sont maitrisées. Le patient me
-                                            dit bien dormir et se sentir bien tout au long de la journée.
-
-                                            Prochain rendez-vous à votre cabinet à fixer.
-                                            Fin de DEP en Janvier.</p>
+                                        <p class="observation"
+                                        >
+                                            <span th:each="intervention, status : ${interventions}">
+                                            <span class="getVisible" th:id="observation+${status.index}"
+                                                  th:text="${intervention.observation}">
+                                                  <!--th:onclick="'javascript:displayObs(\''+ ${status.index} +'\');'"-->
+                                            </span>
+                                            </span>
+                                        </p>
                                     </div>
                                     <!-- Docu -->
                                     <div class="no-print">
                                         <h4>Document</h4>
-                                        <ul class="fichierpdf">
-                                            <li><a href="/index.php?r=patient/ouvrirPdf&file=75758" target="_blank">ALBERT
-                                                Yannick 2018.10.16.pdf</a></li>
+                                        <ul class="fichierpdf"
+                                            th:each="intervention, status : ${interventions}"
+                                            th:id="dossierpdf+${status.index}">
+                                            <li th:id="fichierpdf+${status.index}"
+                                            th:text="Pdf_intervention+${#dates.format(intervention.dateRealisation,'dd MMMMM yyyy')}">
+                                                <a href="" target="_blank"></a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <input id="inter_id" type="hidden" value="96428"/>
-                            <input id="inter_title" type="hidden" value="Intervention -
-			VISITE ANNUELLE du 16/10/2018 par GERE Virginie"/>
                             <!-- mesures -->
                             <h4>Mesures</h4>
                             <div class="grid">
@@ -191,7 +260,10 @@
                                     <!-- Liste du matos -->
                                     <div>
                                         <ul>
-                                            <li class='matos selected'>S10 Autoset <input type="hidden" value="8599"/>
+                                            <li class='matos selected'
+                                                th:each="materiel, status : ${materiels}"
+                                                th:text="${materiel.parcMaterielByParcMaterielId.numeroParc.startsWith('VP')} ? ${materiel.parcMaterielByParcMaterielId.articleByArticleId.nom}"
+                                            >
                                             </li>
                                         </ul>
                                     </div>
@@ -203,91 +275,53 @@
                                                     <h4>Réglages machine</h4>
                                                     <div id="valeur-mesures-grid" class="grid-view">
                                                         <div class="summary"></div>
-                                                        <table class="items">
+                                                        <table class="items getMesureVisible"
+                                                               th:each="intervention, status : ${interventions}"
+                                                               th:id="tableMesure+${status.index}">
                                                             <tbody>
-                                                            <tr class="odd">
-                                                                <td>I.A.H de départ</td>
-                                                                <td>32</td>
-                                                            </tr>
-                                                            <tr class="even">
-                                                                <td>HUMIDIFICATEUR</td>
-                                                                <td>Oui</td>
-                                                            </tr>
-                                                            <tr class="odd">
-                                                                <td>MODE</td>
-                                                                <td>Auto</td>
-                                                            </tr>
-                                                            <tr class="even">
-                                                                <td>PRESSION</td>
-                                                                <td>6/12</td>
-                                                            </tr>
-                                                            <tr class="odd">
-                                                                <td>RAMPE</td>
-                                                                <td>/</td>
-                                                            </tr>
-                                                            <tr class="even">
-                                                                <td>PRESSION DE RAMPE</td>
-                                                                <td>/</td>
-                                                            </tr>
-                                                            <tr class="odd">
-                                                                <td>Boitier téléobservance</td>
-                                                                <td>645</td>
-                                                            </tr>
-                                                            <tr class="even">
-                                                                <td>CIRCUIT CHAUFFANT</td>
-                                                                <td>Non</td>
+                                                            <tr
+                                                                    th:each="mesure, status : ${interventions[status.index].valeurMesuresById}"
+                                                                    th:id="liste+${status.index}"
+                                                                    th:class="${status.odd} ? 'odd' : 'even'"
+                                                                    th:style="${mesure.mesureByMesureId.genre==1} ? 'display:table-row' : 'display:none'"
+                                                            >
+                                                                <td
+                                                                        th:text="${mesure.mesureByMesureId.genre==1} ? ${mesure.mesureByMesureId.label}"
+                                                                ></td>
+                                                                <td th:text="${mesure.mesureByMesureId.genre==1} ? ${mesure.valeur}"></td>
                                                             </tr>
                                                             </tbody>
                                                         </table>
-                                                        <div class="keys" style="display:none"
-                                                             title="/index.php?r=patient/fiche&amp;id=6949&amp;page=1&amp;teleobs=1&amp;actif=1&amp;obs=&amp;nonobs=&amp;u=">
-                                                            <span>96428,27,8599</span><span>96428,8,8599</span><span>96428,80,8599</span><span>96428,11,8599</span><span>96428,12,8599</span><span>96428,69,8599</span><span>96428,43,8599</span><span>96428,56,8599</span>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- reglages -->
                                             <div>
                                                 <div class="bloc-mesure">
                                                     <h4>Mesures patient</h4>
                                                     <div id="valeur-mesures-grid" class="grid-view">
                                                         <div class="summary"></div>
-                                                        <table class="items">
+                                                        <table class="items getReglageVisible"
+                                                               th:each="intervention, status : ${interventions}"
+                                                               th:id="tableReglage+${status.index}">
                                                             <tbody>
-                                                            <tr class="odd">
-                                                                <td>OBSERVANCE</td>
-                                                                <td>07:07</td>
+
+                                                            <tr
+                                                                    th:each="mesure, status : ${interventions[status.index].valeurMesuresById}"
+                                                                    th:id="liste+${status.index}"
+                                                                    th:class="${status.odd} ? 'odd' : 'even'"
+                                                                    th:style="${mesure.mesureByMesureId.genre==0} ? 'display:table-row' : 'display:none'"
+                                                            >
+                                                                <td
+                                                                        th:text="${mesure.mesureByMesureId.genre==0} ? ${mesure.mesureByMesureId.label}"
+
+                                                                ></td>
+                                                                <td th:text="${mesure.mesureByMesureId.genre==0} ? ${mesure.valeur}"></td>
                                                             </tr>
-                                                            <tr class="even">
-                                                                <td>I.A.H résiduel machine</td>
-                                                                <td>1.1</td>
-                                                            </tr>
-                                                            <tr class="odd">
-                                                                <td>EPWORTH</td>
-                                                                <td>/</td>
-                                                            </tr>
-                                                            <tr class="even">
-                                                                <td>POIDS</td>
-                                                                <td>120</td>
-                                                            </tr>
-                                                            <tr class="odd">
-                                                                <td>TYPE DE MASQUE</td>
-                                                                <td>Narinaire</td>
-                                                            </tr>
-                                                            <tr class="even">
-                                                                <td>MODELE DE MASQUE</td>
-                                                                <td>AIR FIT P10 L</td>
-                                                            </tr>
-                                                            <tr class="odd">
-                                                                <td>FUITES</td>
-                                                                <td><img src="/images/Fuites-Bonnes.png" alt="Bonnes"/>
-                                                                </td>
-                                                            </tr>
+
+
                                                             </tbody>
                                                         </table>
-                                                        <div class="keys" style="display:none"
-                                                             title="/index.php?r=patient/fiche&amp;id=6949&amp;page=1&amp;teleobs=1&amp;actif=1&amp;obs=&amp;nonobs=&amp;u=">
-                                                            <span>96428,24,8599</span><span>96428,13,8599</span><span>96428,33,8599</span><span>96428,9,8599</span><span>96428,79,8599</span><span>96428,34,8599</span><span>96428,41,8599</span>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -299,7 +333,8 @@
                             <div>
                                 <a class="boutonCss" target="_blanc"
                                    href="/index.php?r=patient/GetRapportIntervention&i=OTY0Mjg%3D">
-                                    <img src="images/pdf.png" alt="PDF"/> Télécharger la version PDF imprimable de
+                                    <img th:src="@{/images/pdf.png}" alt="PDF"/> Télécharger la version PDF imprimable
+                                    de
                                     l'intervention
                                 </a>
                             </div>
@@ -307,7 +342,11 @@
                     </div>
                 </div>
 
-
+<!--TODO :-->
+                <!-- - graphiques et statistiques-->
+                <!-- - page d'accueil patient-->
+                <!--(- page accueil technicien)-->
+                <!-- - envoi de message-->
                 <div class="demo-container" id="graph3courbes">
                     <div id="placeholder" class="demo-placeholder"></div>
                     <label class="no-print"><input type="checkbox" id="echelle-temps"></input>Respectez l'échelle du
@@ -334,7 +373,6 @@
                 <span id="tooltip2"></span>
 
                 <!-- SCRIPT d'affichage des graphiques -->
-
 
 
                 <h3 id="teleobs">Télé-observance</h3>
@@ -436,21 +474,20 @@
 
 </script>
 <!--<script type="text/javascript">-->
-    <!--$(document).ready(function () {-->
+<!--$(document).ready(function () {-->
 
-        <!--var options = {-->
-            <!--autoPlay: true, //use Sequence's autoPlay feature-->
-            <!--autoPlayDelay: 2000,-->
-            <!--pauseOnHover: false-->
-            <!--//Sequence options go here. See here: http://www.sequencejs.com/documentation.html#developers-->
-        <!--}-->
+<!--var options = {-->
+<!--autoPlay: true, //use Sequence's autoPlay feature-->
+<!--autoPlayDelay: 2000,-->
+<!--pauseOnHover: false-->
+<!--//Sequence options go here. See here: http://www.sequencejs.com/documentation.html#developers-->
+<!--}-->
 
-        <!--var sequence = $("#sequence").sequence(options).data("sequence");-->
-    <!--});-->
+<!--var sequence = $("#sequence").sequence(options).data("sequence");-->
+<!--});-->
 <!--</script>-->
-<script type="text/javascript" src="/assets/218bb611/gridview/jquery.yiigridview.js"></script>
-<script type="text/javascript" src="/assets/4f2e0ce9/jui/js/jquery-ui.min.js"></script>
 
+<script type="text/javascript" th:src="@{/js/jquery-ui.min.js}"></script>
 
 
 </div>
