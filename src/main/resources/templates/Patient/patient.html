@@ -21,13 +21,20 @@
         <!-- ############################################################################################################### -->
         <script type="text/javascript">
 
+
+            <!-- ############################################################################################################### -->
+
+
             $(function () {
 
                 $('#patient-interventions-grid tbody tr:first').addClass("selected");
                 $('.getVisible').hide();
                 $('.getVisible:first').show();
+                $('.getMesureVisible').hide();
                 $('.getMesureVisible:first').show();
+                $('.getReglageVisible').hide();
                 $('.getReglageVisible:first').show();
+                $('.fichierpdf').hide();
                 $('.fichierpdf:first').show();
 
             });
@@ -51,19 +58,11 @@
                 $('.getReglageVisible').hide();
                 $('#tableReglage' + index).fadeIn(400);
                 $('.fichierpdf').hide();
-                $('#fichierpdf' + index).fadeIn(400);
+                $('#dossierpdf' + index).fadeIn(400);
 
             }
 
 
-            // function addSelected(){
-            //     $('#patient-interventions-grid tbody tr:first').removeClass("selected");
-            //     $('#patient-interventions-grid tbody tr').addClass("selected");
-            // };
-
-
-            // jQuery.browser (or $.browser) has been deprecated since version 1.3 and has been removed since version 1.9.
-            // le code suivant fixe le problÃ¨me en cas d'utilisation d'un plugin. C'est le cas ici avec le datePicker
             var matched, browser;
 
             jQuery.uaMatch = function (ua) {
@@ -117,7 +116,197 @@
             <div id="patient_info">
                 <h1 id="nom_patient"><span th:text="${patient.getPersonneById().getNom()}"></span> <span
                         th:text="${patient.getPersonneById().getPrenom()}"></span></h1>
+                <canvas id="myChart" width="400" height="400"></canvas>
+                <script>
 
+                    // var OBSERVANCE = {
+                    //
+                    //     /*Makes the AJAX calll (synchronous) to load a Student Data*/
+                    //     loadObservanceData: function () {
+                    //
+                    //         var observancePatient = [];
+                    //
+                    //         $.ajax({
+                    //
+                    //             async: false,
+                    //
+                    //             url: "../../observancePatient",
+                    //
+                    //             dataType: "json",
+                    //
+                    //             success: function (observancePatient) {
+                    //                 console.log("success");
+                    //                 console.log("dans fonction init obsData = " + observancePatient);
+                    //                 console.log("dans fonction init obsData = " + observancePatient);
+                    //                 console.log(observancePatient[0]);
+                    //
+                    //                 // $.each(studentJsonData,function(index,aStudent){
+                    //                 //
+                    //                 //     formattedstudentListArray.push([aStudent.mathematicsMark,aStudent.computerMark,aStudent.historyMark,aStudent.litratureMark,aStudent.geographyMark]);
+                    //                 // });
+                    //             },
+                    //             error: function (resultat, statut, erreur) {
+                    //
+                    //                 console.log("error");
+                    //                 console.log(resultat);
+                    //                 console.log(statut);
+                    //                 console.log(erreur);
+                    //
+                    //             },
+                    //
+                    //             complete: function (resultat, statut) {
+                    //                 console.log("complete");
+                    //                 console.log(resultat);
+                    //                 console.log(statut);
+                    //             }
+                    //         });
+                    //         return observancePatient;
+                    //     },
+                    //
+                    //
+                    //     /*Crate the custom Object with the data*/
+                    //     createChartData: function (jsonData) {
+                    //
+                    //         console.log(jsonData);
+                    //
+                    //
+                    //         return {
+                    //
+                    //             labels: ["Mathematics", "Computers", "History", "Literature", "Geography"],
+                    //
+                    //             datasets: [
+                    //                 {
+                    //                     fillColor: "rgba(255,0,0,0.3)",
+                    //
+                    //                     strokeColor: "rgba(0,255,0,1)",
+                    //
+                    //                     pointColor: "rgba(0,0,255,1)",
+                    //
+                    //                     pointStrokeColor: "rgba(0,0,255,1)",
+                    //
+                    //                     /*As Ajax response data is a multidimensional array, we have 'student' data in 0th position*/
+                    //                     // console.log(observanceData),
+                    //                     data: observancePatient
+                    //                 }
+                    //             ]
+                    //         };
+                    //     },
+                    //     /*Renders the Chart on a canvas and returns the reference to chart*/
+                    //     renderStudenrRadarChart: function (radarChartData) {
+                    //
+                    //         var context2D = document.getElementById("canvas").getContext("2d"),
+                    //
+                    //             myRadar = new Chart(context2D).Radar(radarChartData, {
+                    //
+                    //                 scaleShowLabels: false,
+                    //
+                    //                 pointLabelFontSize: 10
+                    //             });
+                    //
+                    //
+                    //         return myRadar;
+                    //     },
+                    //     /*Initalization Student render chart*/
+                    //     initRadarChart: function () {
+                    //
+                    //
+                    //         var observancePatient = OBSERVANCE.loadObservanceData();
+                    //         console.log("dans fonction init" + observancePatient);
+                    //         chartData = OBSERVANCE.createChartData(observancePatient);
+                    //
+                    //         radarChartObj = OBSERVANCE.renderStudenrRadarChart(chartData);
+                    //
+                    //     }
+                    // };
+                    //
+                    //
+                    // $(document).ready(function () {
+                    //     console.log("lancement du graph");
+                    //     OBSERVANCE.initRadarChart();
+                    // });
+
+
+                    // ########################################################################
+                    // Méthode habituelle pour les charts js
+
+                    var ctx = document.getElementById('myChart').getContext('2d');
+
+
+                    loadObservanceData : function loadObservanceData() {
+                        var totalResult = [];
+                        var observanceTab = [];
+                        var observanceDate = [];
+
+
+                        $.ajax({
+
+                            async: false,
+
+                            url: "../../observancePatient",
+
+                            dataType: "json",
+
+                            success: function (observancePatient) {
+                                console.log("success");
+                                for (var i = 0; i < observancePatient.length; i++) {
+                                    observanceTab.push(observancePatient[i]["valeur"]);
+                                    observanceDate.push(observancePatient[i]["dateReleve"]);
+                                }
+
+                                console.log(observanceTab[0]);
+                                console.log(observanceDate[0]);
+                            },
+                            error: function (resultat, statut, erreur) {
+                                console.log(statut);
+                                console.log(erreur);
+                            },
+                        });
+                        totalResult.push(observanceTab);
+                        totalResult.push(observanceDate);
+                        console.log(totalResult);
+                        return totalResult;
+
+                    }
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: loadObservanceData()[1],
+                            // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                                label: 'Observance du patient',
+                                data: loadObservanceData()[0],
+                                // data: [12, 19, 3, 5, 2, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                </script>
                 <div class="grid">
                     <div class="grid2">
                         <div>
@@ -240,14 +429,14 @@
                                             </span>
                                         </p>
                                     </div>
-                                    <!-- Docu -->
+                                    <!-- Fichier pdf -->
                                     <div class="no-print">
                                         <h4>Document</h4>
                                         <ul class="fichierpdf"
                                             th:each="intervention, status : ${interventions}"
                                             th:id="dossierpdf+${status.index}">
                                             <li th:id="fichierpdf+${status.index}"
-                                            th:text="Pdf_intervention+${#dates.format(intervention.dateRealisation,'dd MMMMM yyyy')}">
+                                                th:text="Pdf_intervention+${#dates.format(intervention.dateRealisation,'dd MMMMM yyyy')}">
                                                 <a href="" target="_blank"></a></li>
                                         </ul>
                                     </div>
@@ -342,18 +531,11 @@
                     </div>
                 </div>
 
-<!--TODO :-->
+                <!--TODO :-->
                 <!-- - graphiques et statistiques-->
                 <!-- - page d'accueil patient-->
                 <!--(- page accueil technicien)-->
                 <!-- - envoi de message-->
-                <div class="demo-container" id="graph3courbes">
-                    <div id="placeholder" class="demo-placeholder"></div>
-                    <label class="no-print"><input type="checkbox" id="echelle-temps"></input>Respectez l'échelle du
-                        temps.</label>
-                    <span id="tooltip"></span>
-                    <div id='loadimage' style='display:none;'></div>
-                </div>
 
 
                 <!-- TEST d'affichage de plusieurs graphiques plutÃ´t qu'un seul pour voir ce que Ã§a donne. -->

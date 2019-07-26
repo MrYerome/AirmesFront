@@ -3,6 +3,7 @@ package com.airsante.airmes.controllers;
 import com.airsante.airmes.modelsJson.*;
 import com.airsante.airmes.services.*;
 import com.airsante.airmes.utils.StoreSession;
+import com.airsante.airmes.utils.Token;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -107,7 +108,7 @@ public class PrescripteurController {
         modelAndView.addObject("materiels", materiels);
         System.out.println(materiels);
         modelAndView.addObject("interventions", interventions);
-
+//        modelAndView.addObject("observances", ObservanceServiceApi.findObservancePatient(patient.getDataId(), token));
         return modelAndView;
     }
 
