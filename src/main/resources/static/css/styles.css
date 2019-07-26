@@ -6,6 +6,10 @@
 -> NOIR #554f58
 
 */
+.chart-container {
+    width: 1000px;
+    height:600px
+}
 
 body {
     background: url(../images/fond-air-sante.jpg) no-repeat white 50% 0%;

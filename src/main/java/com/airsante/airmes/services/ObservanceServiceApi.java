@@ -37,10 +37,8 @@ public class ObservanceServiceApi {
         try {
             traverson = new Traverson(new URI(URL), MediaTypes.HAL_JSON);
             Map<String,Object> parameters = new HashMap<String,Object>();
-            parameters.put("id",1129);
-            TraversalBuilder tb = traverson.follow("releve_observance_patient", "search", "findTop30ByPatientIdOrderByDateReleveDesc").withTemplateParameters(parameters).withHeaders(headers);
-            String s = tb.toString().toString();
-            System.out.println(s);
+            parameters.put("id",id);
+            TraversalBuilder tb = traverson.follow("releve_observance_patient", "search", "findTop28ByPatientIdOrderByDateReleveDesc").withTemplateParameters(parameters).withHeaders(headers);
             ParameterizedTypeReference<Resources<Observance>> typeRefDevices = new ParameterizedTypeReference<Resources<Observance>>() {
             };
             Resources<Observance> resObservances = tb.toObject(typeRefDevices);

@@ -14,6 +14,7 @@ public class Observance extends ResourceSupport {
     private Timestamp dateCreation;
     private BigDecimal iah;
     private BigDecimal fuites;
+    private String color;
 
 //    public Link getPatientId() {
 //        return patientId;
@@ -71,6 +72,13 @@ public class Observance extends ResourceSupport {
         this.fuites = fuites;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     @Override
     public String toString() {
@@ -81,6 +89,7 @@ public class Observance extends ResourceSupport {
                 ", \"dateCreation\": " +"\""+ dateCreation + "\""+
                 ", \"iah\": " + iah +
                 ", \"fuites\": " + fuites +
+                ", \"color\": " + color +
                 '}';
     }
 }

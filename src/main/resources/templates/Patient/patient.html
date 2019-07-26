@@ -116,141 +116,57 @@
             <div id="patient_info">
                 <h1 id="nom_patient"><span th:text="${patient.getPersonneById().getNom()}"></span> <span
                         th:text="${patient.getPersonneById().getPrenom()}"></span></h1>
-                <canvas id="myChart" width="400" height="400"></canvas>
+                <canvas id="myChart" class="chart-container" width="400" height="400"></canvas>
                 <script>
-
-                    // var OBSERVANCE = {
-                    //
-                    //     /*Makes the AJAX calll (synchronous) to load a Student Data*/
-                    //     loadObservanceData: function () {
-                    //
-                    //         var observancePatient = [];
-                    //
-                    //         $.ajax({
-                    //
-                    //             async: false,
-                    //
-                    //             url: "../../observancePatient",
-                    //
-                    //             dataType: "json",
-                    //
-                    //             success: function (observancePatient) {
-                    //                 console.log("success");
-                    //                 console.log("dans fonction init obsData = " + observancePatient);
-                    //                 console.log("dans fonction init obsData = " + observancePatient);
-                    //                 console.log(observancePatient[0]);
-                    //
-                    //                 // $.each(studentJsonData,function(index,aStudent){
-                    //                 //
-                    //                 //     formattedstudentListArray.push([aStudent.mathematicsMark,aStudent.computerMark,aStudent.historyMark,aStudent.litratureMark,aStudent.geographyMark]);
-                    //                 // });
-                    //             },
-                    //             error: function (resultat, statut, erreur) {
-                    //
-                    //                 console.log("error");
-                    //                 console.log(resultat);
-                    //                 console.log(statut);
-                    //                 console.log(erreur);
-                    //
-                    //             },
-                    //
-                    //             complete: function (resultat, statut) {
-                    //                 console.log("complete");
-                    //                 console.log(resultat);
-                    //                 console.log(statut);
-                    //             }
-                    //         });
-                    //         return observancePatient;
-                    //     },
-                    //
-                    //
-                    //     /*Crate the custom Object with the data*/
-                    //     createChartData: function (jsonData) {
-                    //
-                    //         console.log(jsonData);
-                    //
-                    //
-                    //         return {
-                    //
-                    //             labels: ["Mathematics", "Computers", "History", "Literature", "Geography"],
-                    //
-                    //             datasets: [
-                    //                 {
-                    //                     fillColor: "rgba(255,0,0,0.3)",
-                    //
-                    //                     strokeColor: "rgba(0,255,0,1)",
-                    //
-                    //                     pointColor: "rgba(0,0,255,1)",
-                    //
-                    //                     pointStrokeColor: "rgba(0,0,255,1)",
-                    //
-                    //                     /*As Ajax response data is a multidimensional array, we have 'student' data in 0th position*/
-                    //                     // console.log(observanceData),
-                    //                     data: observancePatient
-                    //                 }
-                    //             ]
-                    //         };
-                    //     },
-                    //     /*Renders the Chart on a canvas and returns the reference to chart*/
-                    //     renderStudenrRadarChart: function (radarChartData) {
-                    //
-                    //         var context2D = document.getElementById("canvas").getContext("2d"),
-                    //
-                    //             myRadar = new Chart(context2D).Radar(radarChartData, {
-                    //
-                    //                 scaleShowLabels: false,
-                    //
-                    //                 pointLabelFontSize: 10
-                    //             });
-                    //
-                    //
-                    //         return myRadar;
-                    //     },
-                    //     /*Initalization Student render chart*/
-                    //     initRadarChart: function () {
-                    //
-                    //
-                    //         var observancePatient = OBSERVANCE.loadObservanceData();
-                    //         console.log("dans fonction init" + observancePatient);
-                    //         chartData = OBSERVANCE.createChartData(observancePatient);
-                    //
-                    //         radarChartObj = OBSERVANCE.renderStudenrRadarChart(chartData);
-                    //
-                    //     }
-                    // };
-                    //
-                    //
-                    // $(document).ready(function () {
-                    //     console.log("lancement du graph");
-                    //     OBSERVANCE.initRadarChart();
-                    // });
-
-
                     // ########################################################################
                     // Méthode habituelle pour les charts js
 
                     var ctx = document.getElementById('myChart').getContext('2d');
-
+                    function minutesToHours(minutes) {
+                        var hour = Math.floor(minutes / 60);
+                        minutes = minutes % 60;
+                        return ((hour < 10) ? "0"+hour : hour) + ":" + ((minutes < 10) ? "0"+minutes : minutes);
+                    }
 
                     loadObservanceData : function loadObservanceData() {
                         var totalResult = [];
                         var observanceTab = [];
                         var observanceDate = [];
-
+                        var observanceColor =[];
+                        var url = window.location.href;
+                        var idPatient = url.split("/").pop();
+                        console.log(idPatient);
 
                         $.ajax({
 
                             async: false,
 
-                            url: "../../observancePatient",
+                            url: "../../observancePatient/" + idPatient,
+                            // url: "../../observancePatient",
 
                             dataType: "json",
 
                             success: function (observancePatient) {
+
+                                function formatterObservance(val) {
+                                    var minutes = Math.round(val % 60);
+
+                                    if (minutes < 10)
+                                        minutes = "0" + minutes;
+
+                                    return Math.floor(val / 60) + "h" + minutes;
+                                }
+
                                 console.log("success");
                                 for (var i = 0; i < observancePatient.length; i++) {
+
+                                    var val = observancePatient[i]["valeur"];
+                                    var heuresMinutes = formatterObservance(val);
+                                    console.log(heuresMinutes);
                                     observanceTab.push(observancePatient[i]["valeur"]);
                                     observanceDate.push(observancePatient[i]["dateReleve"]);
+                                    observanceColor.push(observancePatient[i]["color"]);
+
                                 }
 
                                 console.log(observanceTab[0]);
@@ -263,48 +179,63 @@
                         });
                         totalResult.push(observanceTab);
                         totalResult.push(observanceDate);
+                        totalResult.push(observanceColor);
                         console.log(totalResult);
                         return totalResult;
 
                     }
                     var myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: loadObservanceData()[1],
-                            // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                            datasets: [{
-                                label: 'Observance du patient',
-                                data: loadObservanceData()[0],
-                                // data: [12, 19, 3, 5, 2, 3],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(255, 159, 64, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
+                            type: 'bar',
+                            data: {
+                                labels: loadObservanceData()[1],
+                                // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                datasets: [{
+                                    label: 'Observance du patient',
+                                    data: loadObservanceData()[0],
+                                    backgroundColor: loadObservanceData()[2],
+                                    borderColor: 'rgba(0, 139, 0, 1)',
+                                    borderWidth: 1
                                 }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    xAxes: [{
+                                        type: 'time',
+                                        time: {
+                                            displayFormats: {
+                                                quarter: 'MMM D'
+                                            }
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        // ticks: {
+                                        //     beginAtZero: true
+                                        // },
+                                        ticks: {
+                                            userCallback: function (item) {
+                                                return minutesToHours(item);
+                                            },
+                                        }
+
+
+
+                                    }],
+                                },
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: false
+                                },
+                                hover: {
+                                    mode: 'index',
+                                    intersect: false
+                                }
                             }
                         }
-                    });
+                        )
+                    ;
+
 
                 </script>
                 <div class="grid">
