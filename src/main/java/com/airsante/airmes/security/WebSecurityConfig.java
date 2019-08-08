@@ -6,9 +6,10 @@ import com.airsante.airmes.utils.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,11 +19,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,19 +32,15 @@ import java.io.IOException;
  * @author jerome.vinet
  * @since 2019.03.28
  */
-
 @Configuration
 @EnableWebSecurity
-@SessionAttributes("token")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
     /**
-     * Définition des méthodes pour être en relation avec la base de données
+     * Création du bean d'authentification, en lien avec le userDetailsService
      *
      * @return
      */
@@ -79,9 +73,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/resources/**");
     }
 
+
     /**
      * Définit les comportements suite à l'action / login
-     * Définit les accès selon les rôles de Spring Security
+     * Définit les droits d'accès aux pages selon les rôles de Spring Security
+     *
      * @param http
      * @throws Exception
      */
@@ -94,8 +90,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/*.js", "/*.css").permitAll()
                 .antMatchers("/patient/**").authenticated()
                 .antMatchers("/personne/**").authenticated()
-                .antMatchers("/adresse/**").authenticated()
-                .antMatchers("/prescripteur/**").access("hasAnyRole('ADMIN', 'PRESCRIPTEUR')")
                 .antMatchers("/prescripteur/**").access("hasAnyRole('ADMIN', 'PRESCRIPTEUR')")
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .and()
@@ -134,8 +128,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                         redirection = "/utilisateur/index";
                                         break;
                                     case "ROLE_PRESCRIPTEUR":
-//                                        redirection = "/prescripteur/index";
-                                        redirection = "/prescripteur/listePatientsActifsTO";
+                                        redirection = "/prescripteur/index";
+//                                        redirection = "/prescripteur/listePatientsActifsTO";
                                         break;
                                     case "ROLE_PATIENT":
                                         redirection = "/patient/index";
@@ -152,26 +146,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied")
-//                .logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)))
-//                .permitAll()
                 .and()
                 .logout()
-//                .logoutUrl("/index")
-//                .logoutSuccessUrl("/")
-        //.permitAll()
+                .logoutSuccessHandler(new LogoutSuccessHandler() {
+                    @Override
+                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                        request.getSession().invalidate();
+                        redirectStrategy.sendRedirect(request, response, "/index");
+
+                    }
+                })
         ;
-
-
-
-
     }
-
 
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
 
 }

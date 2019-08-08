@@ -3,7 +3,6 @@ package com.airsante.airmes.controllers;
 import com.airsante.airmes.modelsJson.*;
 import com.airsante.airmes.services.*;
 import com.airsante.airmes.utils.StoreSession;
-import com.airsante.airmes.utils.Token;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,10 +21,38 @@ import java.util.Collection;
 @RestController
 public class PrescripteurController {
 
+    /**
+     * Retourne la liste de tous les patients pour un prescripteur donné
+     * @param modelAndView
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = {"prescripteur/listePatients"}, method = RequestMethod.GET)
+    public ModelAndView listePatients(ModelAndView modelAndView, HttpSession session) {
+        modelAndView.setViewName("Prescripteur/listePatients");
+        modelAndView.addObject("listPatientsPrescripteur",
+                getPatientsPrescripteursByContext(session, null, 0));
+        modelAndView.addObject("typeCategorie", " patients (actifs ou non).");
+        return modelAndView;
+    }
 
     /**
-     * Permet d'accéder à / ou /index
-     *
+     * Retourne la liste des patients actifs pour un prescripteur donné
+     * @param modelAndView
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = {"prescripteur/listePatientsActifs"}, method = RequestMethod.GET)
+    public ModelAndView listePatientsActifs(ModelAndView modelAndView, HttpSession session) {
+        modelAndView.setViewName("Prescripteur/listePatients");
+        modelAndView.addObject("listPatientsPrescripteur",
+                getPatientsPrescripteursByContext(session, "en cours", 0));
+        modelAndView.addObject("typeCategorie", " patients actifs.");
+        return modelAndView;
+    }
+
+    /**
+     * Permet d'accéder à /prescripteur/ ou /prescripteur/index
      * @param modelAndView
      * @return une view dans mes ressources template "Prescripteur/accueilPrescripteur"
      */
@@ -44,23 +71,12 @@ public class PrescripteurController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"prescripteur/listePatients"}, method = RequestMethod.GET)
-    public ModelAndView listePatients(ModelAndView modelAndView, HttpSession session) {
-        modelAndView.setViewName("Prescripteur/listePatients");
-        modelAndView.addObject("listPatientsPrescripteur", getPatientsPrescripteursByContext(session, null, 0));
-        modelAndView.addObject("typeCategorie", " patients (actifs ou non).");
 
-        return modelAndView;
-    }
-
-    @RequestMapping(value = {"prescripteur/listePatientsActifs"}, method = RequestMethod.GET)
-    public ModelAndView listePatientsActifs(ModelAndView modelAndView, HttpSession session) {
-        modelAndView.setViewName("Prescripteur/listePatients");
-        modelAndView.addObject("listPatientsPrescripteur", getPatientsPrescripteursByContext(session, "en cours", 0));
-        modelAndView.addObject("typeCategorie", " patients actifs.");
-        return modelAndView;
-    }
-
+    /**
+     * Permet d'accéder à /prescripteur/listePatientsActifsTO
+     * @param modelAndView
+     * @return une view dans mes ressources template "Prescripteur/listePatients"
+     */
     @RequestMapping(value = {"prescripteur/listePatientsActifsTO"}, method = RequestMethod.GET)
     public ModelAndView listePatientsActifsTO(ModelAndView modelAndView, HttpSession session) {
         modelAndView.setViewName("Prescripteur/listePatients");
@@ -70,6 +86,14 @@ public class PrescripteurController {
         return modelAndView;
     }
 
+    /**
+     * Méthode appelée quand on veut récupérer la liste de patients pour un prescripteur
+     * En fonction des paramètres, on va chercher telle ou telle fonction dans le PrescripteurService
+     * @param session
+     * @param actif
+     * @param to
+     * @return
+     */
     public Collection<PatientCustom> getPatientsPrescripteursByContext(HttpSession session, String actif, int to){
         String token = StoreSession.getToken(session);
         Long idPrescripteur = PrescripteurServiceApi.findByIdentifiant(session.getAttribute("identifiant").toString(), token, session);
@@ -83,32 +107,30 @@ public class PrescripteurController {
         }
     }
 
-
     /**
-     * Affiche un patient
+     * Affiche un patient en fonction de son id
      * @param id
      * @param modelAndView
+     * @param session
+     * @param request
      * @return
      */
     @RequestMapping(value = "/prescripteur/patient/{id}", method = RequestMethod.GET)
     public ModelAndView patientSingle(@PathVariable("id") int id, ModelAndView modelAndView, HttpSession session, HttpServletRequest request) {
+        modelAndView.setViewName("Patient/patient");
         String token = StoreSession.getToken(session);
         Patient patient = PatientServiceApi.findById(id, token);
         PatientCustom patientCustom = PatientServiceApi.findOneCustomPatients(patient.getDataId(), token);
-        modelAndView.setViewName("Patient/patient");
         Adresse adresse = AdresseServiceApi.findAdressePersonne(patient.getDataId(), token);
         Collection<ParcMaterielPatient> materiels = MaterielServiceApi.findMateriel(patient.getDataId(), token);
         Collection<Intervention> interventions = InterventionServiceApi.findAllInterventions (patient.getDataId(),token);
-        System.out.println("patient = " + patient);
         modelAndView.addObject("patient", patient);
         modelAndView.addObject("patientCustom", patientCustom);
         modelAndView.addObject("returnPage", request.getHeader("referer"));// on récupère l'URL de la page précédente
         modelAndView.addObject("prescripteur", StoreSession.getPrescripteur(session));//on récupère le prescripteur pour les liens
         modelAndView.addObject("adresse", adresse);
         modelAndView.addObject("materiels", materiels);
-        System.out.println(materiels);
         modelAndView.addObject("interventions", interventions);
-//        modelAndView.addObject("observances", ObservanceServiceApi.findObservancePatient(patient.getDataId(), token));
         return modelAndView;
     }
 

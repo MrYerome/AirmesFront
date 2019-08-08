@@ -12,39 +12,28 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
 
+/**
+ * @author : jerome.vinet
+ * @since : 2019.06.05
+ */
 public class Token {
 
     public static String getTokenApi() throws IOException {
-        System.out.println("Tentative de récupération du token");
         final String CLIENT_ID = "airmesFront";
-        final String SECRET = "airmesFront";
+        final String SECRET = "air$@ante_49AiR";
         final String GRANT_TYPE = "password";
-        String USERNAME = "admin";
+        String USERNAME = "air_94_$ante";
         String PASSWORD = "admin";
-
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//    if (principal instanceof User) {
-//        System.out.println("entrée dans le if");
-//        USERNAME = ((User)principal).getUsername();
-//        System.out.println("username "+ USERNAME);
-//         PASSWORD = ((AppUser)principal).getEncrytedPassword();
-//        System.out.println("PASSWORD "+ PASSWORD);
-//    } else {
-//        System.out.println("entrée dans le else");
-//        String username = principal.toString();
-//    }
-
         final String ENDPOINT_TOKEN = "http://localhost:8090/oauth/token?"
                 + "client_id=" + CLIENT_ID
                 + "&grant_type=" + GRANT_TYPE
                 + "&password=" + PASSWORD
                 + "&username=" + USERNAME;
-        //final String ENDPOINT_TOKEN = "http://localhost:8090/oauth/token?client_id=airmesFront&grant_type=password&password=airsante&username=tonyd";
         String response = "";
-        URL url = null;
+        URL url ;
         url = new URL(ENDPOINT_TOKEN);
         String auth = Base64.getEncoder().encodeToString((CLIENT_ID + ":" + SECRET).getBytes());
-
+        System.out.println("auth :" + auth);
         // HTTP request computing
         HttpURLConnection conn = null;
 

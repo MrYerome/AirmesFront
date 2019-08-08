@@ -1,8 +1,4 @@
 package com.airsante.airmes.security;
-import java.util.ArrayList;
-import java.util.List;
-
-
 import com.airsante.airmes.dao.AppRoleDAO;
 import com.airsante.airmes.dao.AppUserDAO;
 import com.airsante.airmes.model.AppUser;
@@ -15,7 +11,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
+ * @author jerome.vinet
+ * @since 2019.03.28
  * Service qui récupère les informations de connexion et s'occupe de voir si l'utilisateur existe
  */
 @Service
@@ -30,7 +31,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         AppUser appUser = this.appUserDAO.findUserAccount(userName);
-
         if (appUser == null) {
             System.out.println("Utilisateur non trouvé! " + userName);
             throw new UsernameNotFoundException("Utilisateur " + userName + " n'a pas été trouvé dans la base de données");
@@ -44,12 +44,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 grantList.add(authority);
             }
         }
-
         UserDetails userDetails = new User(appUser.getUserName(), //
                 appUser.getEncrytedPassword(), grantList);
 
         return userDetails;
     }
-
 }
 

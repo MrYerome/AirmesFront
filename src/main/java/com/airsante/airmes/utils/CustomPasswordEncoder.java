@@ -10,7 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class CustomPasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence rawPassword) {
-        String mdpCrypted = DigestUtils.sha1Hex(rawPassword.toString());
+        String mdpCrypted = DigestUtils.sha1Hex("VenT@i3$an734-9"+rawPassword.toString());
         return mdpCrypted;
     }
 

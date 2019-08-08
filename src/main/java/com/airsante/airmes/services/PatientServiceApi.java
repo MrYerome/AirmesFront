@@ -1,11 +1,8 @@
 package com.airsante.airmes.services;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-
+import com.airsante.airmes.modelsJson.Patient;
+import com.airsante.airmes.modelsJson.PatientCustom;
 import com.airsante.airmes.utils.Constantes;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resources;
@@ -13,17 +10,61 @@ import org.springframework.hateoas.client.Traverson;
 import org.springframework.hateoas.client.Traverson.TraversalBuilder;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-import com.airsante.airmes.modelsJson.Patient;
-import com.airsante.airmes.modelsJson.PatientCustom;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collection;
 
+/**
+ * @author jerome.vinet
+ * @since 2019.06.13
+ */
 public class PatientServiceApi {
 
     final static String URL = Constantes.getUrl();
     static HttpHeaders headers = new HttpHeaders();
-
     static Collection<PatientCustom> CollPatients = new ArrayList<PatientCustom>();
 
+    /**
+     * Permet de récupérer un patient à l'aide de son ID
+     * @param id
+     * @param token
+     * @return
+     */
+    public static Patient findById(long id, String token) {
+        RestTemplate restTemplate = new RestTemplate();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<String> header = new HttpEntity<>(headers);
+        String total = URL + "patient/" + id + "?projection=inlinePatient";
+        Patient patient = restTemplate.exchange(total, HttpMethod.GET, header, Patient.class).getBody();
+        return patient;
+    }
+
+
+    /**
+     * La méthode pour renvoyer une liste personnalisée de données patients/personnes/TO
+     * @param id
+     * @param token
+     * @return
+     */
+    public static Collection<PatientCustom> findPatientsPrescripteur(long id, String token) {
+        headers.set("Authorization", "Bearer " + token);
+        System.out.println(token);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String content = URL + "CustomControllerPrescripteurs/listePatientsPrescripteur?param=" + id;
+            ResponseEntity<Collection<PatientCustom>> response = restTemplate.exchange(
+                    content, HttpMethod.GET, entity,
+                    new ParameterizedTypeReference<Collection<PatientCustom>>() {
+                    });
+            CollPatients = response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CollPatients;
+    }
 
     /**
      * TOTAL #########################################################################################################
@@ -36,7 +77,7 @@ public class PatientServiceApi {
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String content = URL + "CustomControllerUtilisateur/nombreTotalPatients" ;
+            String content = URL + "CustomControllerUtilisateur/nombreTotalPatients";
             ResponseEntity<String> response = restTemplate.exchange(
                     content, HttpMethod.GET, entity, String.class);
             if (response.getStatusCode() == HttpStatus.OK) {
@@ -122,31 +163,6 @@ public class PatientServiceApi {
         return CollPatients;
     }
 
-    /**
-     * @return
-     * @author : jerome.vinet
-     * @since 20190417
-     * LA méthode pour renvoyer une liste personnalisée de données patients/personnes/TO
-     */
-
-
-    public static Collection<PatientCustom> findPatientsPrescripteur(long id, String token) {
-        headers.set("Authorization", "Bearer " + token);
-        System.out.println(token);
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            String content = URL + "CustomControllerPrescripteurs/listePatientsPrescripteur?param=" + id;
-            ResponseEntity<Collection<PatientCustom>> response = restTemplate.exchange(
-                    content, HttpMethod.GET, entity,
-                    new ParameterizedTypeReference<Collection<PatientCustom>>() {
-                    });
-            CollPatients = response.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return CollPatients;
-    }
 
     public static Collection<PatientCustom> findPatientsActifsPrescripteur(long id, String token) {
         headers.set("Authorization", "Bearer " + token);
@@ -215,11 +231,11 @@ public class PatientServiceApi {
         headers.set("Authorization", "Bearer " + token);
         PatientCustom patientCustom = new PatientCustom();
         try {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<String> header = new HttpEntity<String>(headers);
-        String total = URL + "patient/search/getOnePatientInterfaceAccueilCustom?id=" + id ;
-        System.out.println(total);
-        patientCustom = restTemplate.exchange(total, HttpMethod.GET, header, PatientCustom.class).getBody();
+            RestTemplate restTemplate = new RestTemplate();
+            HttpEntity<String> header = new HttpEntity<String>(headers);
+            String total = URL + "patient/search/getOnePatientInterfaceAccueilCustom?id=" + id;
+            System.out.println(total);
+            patientCustom = restTemplate.exchange(total, HttpMethod.GET, header, PatientCustom.class).getBody();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -282,7 +298,6 @@ public class PatientServiceApi {
         }
         return CollPatients;
     }
-
 
 
     /**
@@ -359,20 +374,4 @@ public class PatientServiceApi {
         return nombreTotalPatientsTelesuivis;
     }
 
-    /**
-     * Permet de récupérer un patient à l'aide de son ID
-     *
-     * @param id
-     * @param token
-     * @return
-     */
-    public static Patient findById(long id, String token) {
-        RestTemplate restTemplate = new RestTemplate();
-        headers.set("Authorization", "Bearer " + token);
-        HttpEntity<String> header = new HttpEntity<String>(headers);
-        String total = URL + "patient/" + id + "?projection=inlinePatient";
-        System.out.println(URL);
-        Patient patient = restTemplate.exchange(total, HttpMethod.GET, header, Patient.class).getBody();
-        return patient;
-    }
 }

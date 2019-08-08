@@ -19,20 +19,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
-
  * @author jerome.vinet
  *@since 2019.03.15
  *Controller du site, notamment de l'index
  */
 @RestController
 public class SiteController {
-
-    @Value("${my.url.api}")
-    private String URL;
-
-    private static final String DIRECTORY = "C:\\DEV\\AirmesFront\\AirmesFront\\src\\main\\resources\\static\\upload\\";
-    private static final String DEFAULT_FILE_NAME = "decret-ppc.pdf";
-    private static final String DEFAULT_FILE_NAME_RGPD = "Document_RGPD_AirSante.pdf";
 
     @Autowired
     private ServletContext servletContext;
@@ -47,13 +39,6 @@ public class SiteController {
         modelAndView.setViewName("index");
         return modelAndView;
     }
-
-    @RequestMapping(value ={"/test"}, method = RequestMethod.GET)
-    public ModelAndView test(ModelAndView modelAndView) {
-        modelAndView.setViewName("Admin/indexAdmin");
-        return modelAndView;
-    }
-
 
     /**
      * Mapping pour renvoyer une page 403
@@ -77,6 +62,26 @@ public class SiteController {
         modelAndView.setViewName("error500");
         return modelAndView;
     }
+
+
+    @Value("${my.url.api}")
+    private String URL;
+
+    private static final String DIRECTORY = "C:\\DEV\\AirmesFront\\AirmesFront\\src\\main\\resources\\static\\upload\\";
+    private static final String DEFAULT_FILE_NAME = "decret-ppc.pdf";
+    private static final String DEFAULT_FILE_NAME_RGPD = "Document_RGPD_AirSante.pdf";
+
+//
+//    @RequestMapping(value ={"/test"}, method = RequestMethod.GET)
+//    public ModelAndView test(ModelAndView modelAndView) {
+//        modelAndView.setViewName("Admin/indexAdmin");
+//        return modelAndView;
+//    }
+
+
+
+
+
 
 
     @RequestMapping(value = "/agences", method = RequestMethod.GET)
