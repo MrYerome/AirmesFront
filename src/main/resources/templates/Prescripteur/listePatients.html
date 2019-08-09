@@ -37,17 +37,16 @@
                 <tr th:each="patient, status : ${listPatientsPrescripteur}"
                     th:class="${status.odd} ? 'odd' : 'even'"
                     th:onclick="'window.location.href=\'/prescripteur/patient/' + ${patient.dataId} + '\''">
-                        <td th:text="${patient.nom}">Nom</td>
-                        <td th:text="${patient.prenom}">Prénom</td>
-                        <td th:text="${patient.ville}">Ville</td>
-                        <td th:text="${patient.numeroSecu}">Numéro Sécu</td>
-                        <td th:text="${patient.dateInstallation != null} ? ${#dates.format(patient.dateInstallation, 'dd MMMMM yyyy')}"></td>
-                        <td th:text="${patient.dateDerniereInter != null} ? ${#dates.format(patient.dateDerniereInter, 'dd MMMMM yyyy')}"></td>
-                        <td th:text="${patient.dateProchaineInter != null} ? ${#dates.format(patient.dateProchaineInter, 'dd MMMMM yyyy')}"></td>
-                        <td th:text="${patient.statutDossier}"></td>
-                        <td th:text="${patient.moyenneMois}"></td>
+                    <td th:text="${patient.nom}">Nom</td>
+                    <td th:text="${patient.prenom}">Prénom</td>
+                    <td th:text="${patient.ville}">Ville</td>
+                    <td th:text="${patient.numeroSecu}">Numéro Sécu</td>
+                    <td th:text="${patient.dateInstallation != null} ? ${#dates.format(patient.dateInstallation, 'dd MMMMM yyyy')}"></td>
+                    <td th:text="${patient.dateDerniereInter != null} ? ${#dates.format(patient.dateDerniereInter, 'dd MMMMM yyyy')}"></td>
+                    <td th:text="${patient.dateProchaineInter != null} ? ${#dates.format(patient.dateProchaineInter, 'dd MMMMM yyyy')}"></td>
+                    <td th:text="${patient.statutDossier}"></td>
+                    <td th:text="${patient.moyenneMois}"></td>
                 </tr>
-
                 </tbody>
             </table>
 

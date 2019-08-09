@@ -16,56 +16,38 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *  @author jerome.vinet
+ *  @since 2019.07.12
+ */
 public class ObservanceServiceApi {
     final static String URL = Constantes.getUrl();
-
-    // HttpHeaders
     static HttpHeaders headers = new HttpHeaders();
 
-
-
-
-
     public static Collection<Observance> findObservancePatient(long id, String token) {
-
-//        ###############################################
-
         Collection<Observance> CollObservances = new ArrayList<Observance>();
-
         headers.set("Authorization", "Bearer " + token);
         Traverson traverson;
         try {
             traverson = new Traverson(new URI(URL), MediaTypes.HAL_JSON);
-            Map<String,Object> parameters = new HashMap<String,Object>();
-            parameters.put("id",id);
-            TraversalBuilder tb = traverson.follow("releve_observance_patient", "search", "findTop28ByPatientIdOrderByDateReleveDesc").withTemplateParameters(parameters).withHeaders(headers);
-            ParameterizedTypeReference<Resources<Observance>> typeRefDevices = new ParameterizedTypeReference<Resources<Observance>>() {
+            Map<String, Object> parameters = new HashMap<String, Object>();
+            parameters.put("id", id);
+            TraversalBuilder tb = traverson
+                    .follow("releve_observance_patient", "search", "findTop28ByPatientIdOrderByDateReleveDesc")
+                    .withTemplateParameters(parameters).withHeaders(headers);
+            ParameterizedTypeReference<Resources<Observance>> typeRefDevices
+                    = new ParameterizedTypeReference<Resources<Observance>>() {
             };
             Resources<Observance> resObservances = tb.toObject(typeRefDevices);
             CollObservances = resObservances.getContent();
-
-//            ParameterizedTypeReference<Resources<String>> typeRefDevices = new ParameterizedTypeReference<Resources<String>>() {
-//            };
-//            System.out.println(typeRefDevices);
-//            Resources<String> resObservances = tb.toObject(typeRefDevices);
-//            System.out.println(resObservances);
-//            Collection<String> result = resObservances.getContent();
-//            System.out.println(result);
-
-//            for (Observance observanceJson : CollObservances) {
-//                System.out.println(" releve_observance_patient " + observanceJson.toString());
-//            }
-             System.out.println(CollObservances.toString());
         } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         return CollObservances;
-
+    }
 
 //        ############################################################
-
 
 
 //        headers.set("Authorization", "Bearer " + token);
@@ -86,7 +68,7 @@ public class ObservanceServiceApi {
 //            e.printStackTrace();
 //        }
 //        return CollObservances;
-    }
+//    }
 
 
 }

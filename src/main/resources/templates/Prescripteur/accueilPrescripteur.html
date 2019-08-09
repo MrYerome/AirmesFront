@@ -27,23 +27,20 @@
                     <h3 class="prescripteur_accueil_patient">Dossiers Patients</h3>
                     <div>
                         <ul>
-                            <li>
-                                <a th:href="@{/prescripteur/listePatients}"><p><span
-                                        th:text="${nombreTotalPatients}"></span> patients dont vous êtes le
-                                    prescripteur.
-                                </p></a>
-                            </li>
+                            <li><a th:href="@{/prescripteur/listePatients}"><span
+                                        th:text="${nombreTotalPatients}"></span> patients dont vous êtes le prescripteur.</a></li>
                             <li><a th:href="@{/prescripteur/listePatientsActifs}"><p><span
                                     th:text="${nombreTotalPatientsActifs}"></span> patients sont actifs.</p></a></li>
                             <li><a th:href="@{/prescripteur/listePatientsActifsTO}"><p><span
-                                    th:text="${nombreTotalPatientsActifsTelesuivis}"></span> patients télésuivis.</p></a></li>
+                                    th:text="${nombreTotalPatientsActifsTelesuivis}"></span> patients télésuivis.</p>
+                            </a></li>
                         </ul>
                     </div>
                 </td>
                 <td class="pr" colspan="1">
                     <h3 class="prescripteur_accueil_stats">Statistiques</h3>
                     <div id="sequence-stats">
-
+>
 
                         <ul class="sequence-canvas">
                             <li>

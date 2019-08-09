@@ -1,68 +1,22 @@
 <!doctype html>
 <html lang="fr-FR" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-
-
-<head th:replace="fragments/headIndex :: head">
-</head>
-
-
+<head th:replace="fragments/headIndex :: head"></head>
 <body class="design4">
 <div id="bandeau-noir-haut" class="bandeau-noir">
     <div th:replace="fragments/navbar :: navbar">
     </div>
 </div>
-
-<!--<div class="container">-->
-
-<!--<h1>AirMes - Juin 2019 - Déploiement continu</h1>-->
-<!--<h2>Version 0.0.2</h2>-->
-
-<!--<h2>Formulaire d'authentification SPRING</h2>-->
-<!--<div class="login" th:replace="fragments/login :: login"></div>-->
-<!--<div sec:authorize="hasRole('ROLE_ADMIN')">Coucou l'admin !-->
-<!--<br>-->
-<!--<br>-->
-<!--<button>Générer un hash</button>-->
-<!--</div>-->
-<!--<div id="listeLiens" sec:authorize="isAuthenticated()">-->
-<!--<p>Bienvenue dans mon projet front de Spring Boot !</p>-->
-<!--<p>-->
-<!--<a th:href="@{/adresse/listAdresses}">Afficher la liste de toutes les adresses</a>-->
-<!--<a href="/adresse/listAdresses">Afficher la liste de toutes les adresses</a><br>-->
-<!--</p>-->
-<!--<a th:href="@{/adresse/25}">Afficher l'adresse 25</a>-->
-<!--<p>-->
-<!--<a th:href="@{/patient/listPatients}">Afficher la liste des patients</a>-->
-<!--</p>-->
-<!--<p>-->
-<!--<a th:href="@{/patient/191}">Afficher le patient 191</a>-->
-<!--</p>-->
-<!--<p>-->
-<!--<a th:href="@{/patient/listCustomPatients}">Afficher la liste des customPatients</a>-->
-<!--</p>-->
-
-<!--<p>-->
-<!--<a th:href="@{/admin/indexAdmin}">Espace réservé aux admins</a>-->
-<!--</p>-->
-
-<!--</div>-->
-<!--</div>-->
-
 <div id="page" class="line page design4">
-
-    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur">
-    </div>
+    <div sec:authorize="hasRole('ROLE_PRESCRIPTEUR')" th:replace="fragments/menuPrescripteur :: menuPrescripteur"></div>
+    <div sec:authorize="hasRole('ROLE_AIRSANTE')" th:replace="fragments/menuUtilisateur :: menuUtilisateur"></div>
 
     <div class="line page txtright" style="display: none">
         02 41 87 33 53 <span class="h24"><sup>24H</sup>&frasl;<sub>24</sub> </span>
     </div>
     <div class="line espace-vide design5">
-
-
         <div id="sequence" class="sequence-accueil design5">
             <ul class="sequence-canvas">
-
                 <li class="animate-in">
                     <div class="info-accueil apneedusommeil design5">
                         <p>APNEE DU SOMMEIL</p>
@@ -108,7 +62,8 @@
 
                 <form id="login-form" th:action="@{/login}" method="post">
                     <input class="line right w60 mrs mts" placeholder="Identifiant" type="text" name="username"/>
-                    <input class="line right w60 mrs mt2px" type="password" name="password" placeholder="Mot de passe"/>
+                    <input class="line right w60 mrs mt2px" type="password" name="password"
+                           placeholder="Mot de passe"/>
                     <input class="line right w60 mrs" type="submit" value="Se connecter"/>
                 </form>
                 <div th:if="${param.error}">
@@ -121,15 +76,7 @@
                         class="line right w60 mrs">Créer mon espace patient</button> </a>
 				</span>
             </div>
-
-
         </div>
-        <!--<div class="txtright numero-design5">-->
-
-        <!--<img alt="02 41 87 33 53" src="./images/numero-tel-air-sante.png"/>-->
-        <!--</div>-->
-
-
     </div>
 
 
@@ -139,7 +86,8 @@
 
         <div class='pageweb'>
             <hr/>
-            <p>Bienvenue sur le site d&rsquo;<strong>Air Sant&eacute;</strong>, <u>Prestataire de Sant&eacute; &agrave;
+            <p>Bienvenue sur le site d&rsquo;<strong>Air Sant&eacute;</strong>, <u>Prestataire de Sant&eacute;
+                &agrave;
                 Domicile ind&eacute;pendant</u>, sp&eacute;cialis&eacute; dans l&rsquo;assistance respiratoire</p>
 
             <ul style="margin-left:40px">
@@ -158,8 +106,10 @@
                 </li>
                 <li><strong><span style="color:#009FE3">Dossier administratif</span></strong></li>
                 <li><strong><span style="color:#009FE3">Suivi technique</span></strong></li>
-                <li><strong><span style="color:#009FE3">Lien avec le m&eacute;decin prescripteur</span></strong></li>
-                <li><strong><span style="color:#009FE3">Assistance technique d&rsquo;urgence 24/24h</span></strong></li>
+                <li><strong><span style="color:#009FE3">Lien avec le m&eacute;decin prescripteur</span></strong>
+                </li>
+                <li><strong><span style="color:#009FE3">Assistance technique d&rsquo;urgence 24/24h</span></strong>
+                </li>
             </ul>
 
             <br/>
@@ -182,7 +132,7 @@
 <script type="text/javascript">
     var ready = true;
 
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         var options = {
             autoPlay: true, //use Sequence's autoPlay feature
@@ -197,16 +147,18 @@
         //s'il y a plus de 3 articles, on lance la routine
         var nbArticle = $('.liste-articles li').length;
 
-        if(nbArticle > 3) {
+        if (nbArticle > 3) {
             //setTimeout(animationListeArticle,1000);
-            setInterval(function() {animationListeArticle(500);},5000);
+            setInterval(function () {
+                animationListeArticle(500);
+            }, 5000);
 
             //initialisation des boutons
-            $('.la-bt-prev').click(function() {
+            $('.la-bt-prev').click(function () {
                 animationListeArticle(100);
             });
 
-            $('.la-bt-next').click(function() {
+            $('.la-bt-next').click(function () {
                 animationListeArticleBackToPast(100);
             });
         }
@@ -217,16 +169,16 @@
             //on remonte le block login ??
             //alert(parseInt($('#login').css('top'),10));
             //$('#login').css('top',(parseInt($('#login').css('top'),10) - ((3-nbArticle) * 63))+"px");
-            if(nbArticle <= 2) {
-                $('.espace-vide').css('height',(parseInt($('.espace-vide').css('height'),10) - 30)+"px");
+            if (nbArticle <= 2) {
+                $('.espace-vide').css('height', (parseInt($('.espace-vide').css('height'), 10) - 30) + "px");
             }
         }
     });
 
     //annimation des articles
-    $.fn.disparaitre = function(vitesse) {
+    $.fn.disparaitre = function (vitesse) {
         $(this).animate({
-                left: $(this).width()+"px",
+                left: $(this).width() + "px",
                 opacity: 0,
             },
             vitesse
@@ -235,9 +187,9 @@
         $(this).removeClass('la-current').addClass('la-hidden');
     }
 
-    $.fn.disparaitreEnBas = function(vitesse) {
+    $.fn.disparaitreEnBas = function (vitesse) {
         $(this).animate({
-                left: $(this).width()+"px",
+                left: $(this).width() + "px",
                 opacity: 0,
             },
             vitesse
@@ -245,8 +197,8 @@
         $(this).removeClass('la-current').addClass('la-next');
     }
 
-    $.fn.apparaitre = function(vitesse) {
-        $(this).attr('style','display:block;opacity:0');
+    $.fn.apparaitre = function (vitesse) {
+        $(this).attr('style', 'display:block;opacity:0');
         $(this).animate({
                 top: "-63px",
                 opacity: 1,
@@ -256,12 +208,12 @@
         $(this).removeClass('la-next').addClass('la-current');
     }
 
-    $.fn.apparaitreEnHaut = function(vitesse) {
-        var top = ($('.liste-articles li').length)*63; //63 = taille des blocks avec la marge
+    $.fn.apparaitreEnHaut = function (vitesse) {
+        var top = ($('.liste-articles li').length) * 63; //63 = taille des blocks avec la marge
         //alert(top);
-        $(this).attr('style','display:block;opacity:0;top:-'+top+'px');
+        $(this).attr('style', 'display:block;opacity:0;top:-' + top + 'px');
         $(this).animate({
-                top: (-top + 63)+"px",
+                top: (-top + 63) + "px",
                 opacity: 1,
             },
             vitesse
@@ -270,32 +222,32 @@
     }
 
     function animationListeArticle(vitesse) {
-        if(ready) {
+        if (ready) {
             ready = false;
             //faire disparaitre le 1er article
             //$('.la-first').disparaitre(vitesse);
             $('.liste-articles li:first').disparaitre(vitesse);
 
             //réhaussez les articles suivants
-            $('.la-current').each(function(i,element) {
-                setTimeout(function() {
+            $('.la-current').each(function (i, element) {
+                setTimeout(function () {
                     $(element).animate({
                         top: "-63px",
-                    },vitesse - (vitesse*10/100) );
-                },vitesse + (i * vitesse));
+                    }, vitesse - (vitesse * 10 / 100));
+                }, vitesse + (i * vitesse));
             });
 
             //faire apparaitre le suivant
-            setTimeout(function() {
+            setTimeout(function () {
                 $('.la-next:first').apparaitre(vitesse);
             }, vitesse * 3);
 
             //Changement des classes après tous les mouvements
-            setTimeout(function() {
+            setTimeout(function () {
                 $('.liste-articles li:first').insertAfter($('.liste-articles li:last')).removeClass('la-hidden').addClass('la-next');
                 //$('.liste-articles li:first').removeClass('la-current').addClass('la-first');
-                $('.liste-articles li').each(function(i,element) {
-                    $(element).attr('style','top:0px');
+                $('.liste-articles li').each(function (i, element) {
+                    $(element).attr('style', 'top:0px');
                 });
                 ready = true;
             }, vitesse * 5);
@@ -303,31 +255,31 @@
     }
 
     function animationListeArticleBackToPast(vitesse) {
-        if(ready) {
+        if (ready) {
             ready = false;
             //faire disparaitre le dernier article
             $('.la-current:last').disparaitreEnBas(vitesse);
 
             //abaisser les articles suivants
-            $($('.la-current').get().reverse()).each(function(i,element) {
-                setTimeout(function() {
+            $($('.la-current').get().reverse()).each(function (i, element) {
+                setTimeout(function () {
                     $(element).animate({
                         top: "+63px",
-                    },vitesse - (vitesse*10/100) );
-                },vitesse + (i * vitesse));
+                    }, vitesse - (vitesse * 10 / 100));
+                }, vitesse + (i * vitesse));
             });
 
             //faire apparaitre le précédent (dernier de la liste)
-            setTimeout(function() {
+            setTimeout(function () {
                 $('.la-next:last').apparaitreEnHaut(vitesse);
             }, vitesse * 3);
 
             //Changement des classes après tous les mouvements
-            setTimeout(function() {
+            setTimeout(function () {
                 $('.liste-articles li:last').insertBefore($('.liste-articles li:first'));
                 //$('.liste-articles li:first').removeClass('la-current').addClass('la-first');
-                $('.liste-articles li').each(function(i,element) {
-                    $(element).attr('style','top:0px');
+                $('.liste-articles li').each(function (i, element) {
+                    $(element).attr('style', 'top:0px');
                 });
                 ready = true;
             }, vitesse * 5);

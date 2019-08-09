@@ -71,19 +71,6 @@ public class SiteController {
     private static final String DEFAULT_FILE_NAME = "decret-ppc.pdf";
     private static final String DEFAULT_FILE_NAME_RGPD = "Document_RGPD_AirSante.pdf";
 
-//
-//    @RequestMapping(value ={"/test"}, method = RequestMethod.GET)
-//    public ModelAndView test(ModelAndView modelAndView) {
-//        modelAndView.setViewName("Admin/indexAdmin");
-//        return modelAndView;
-//    }
-
-
-
-
-
-
-
     @RequestMapping(value = "/agences", method = RequestMethod.GET)
     public ModelAndView agences(ModelAndView modelAndView) {
         modelAndView.setViewName("Site/agences");

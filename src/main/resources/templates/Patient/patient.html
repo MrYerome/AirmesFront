@@ -116,128 +116,6 @@
             <div id="patient_info">
                 <h1 id="nom_patient"><span th:text="${patient.getPersonneById().getNom()}"></span> <span
                         th:text="${patient.getPersonneById().getPrenom()}"></span></h1>
-                <canvas id="myChart" class="chart-container" width="400" height="400"></canvas>
-                <script>
-                    // ########################################################################
-                    // Méthode habituelle pour les charts js
-
-                    var ctx = document.getElementById('myChart').getContext('2d');
-                    function minutesToHours(minutes) {
-                        var hour = Math.floor(minutes / 60);
-                        minutes = minutes % 60;
-                        return ((hour < 10) ? "0"+hour : hour) + ":" + ((minutes < 10) ? "0"+minutes : minutes);
-                    }
-
-                    loadObservanceData : function loadObservanceData() {
-                        var totalResult = [];
-                        var observanceTab = [];
-                        var observanceDate = [];
-                        var observanceColor =[];
-                        var url = window.location.href;
-                        var idPatient = url.split("/").pop();
-                        console.log(idPatient);
-
-                        $.ajax({
-
-                            async: false,
-
-                            url: "../../observancePatient/" + idPatient,
-                            // url: "../../observancePatient",
-
-                            dataType: "json",
-
-                            success: function (observancePatient) {
-
-                                function formatterObservance(val) {
-                                    var minutes = Math.round(val % 60);
-
-                                    if (minutes < 10)
-                                        minutes = "0" + minutes;
-
-                                    return Math.floor(val / 60) + "h" + minutes;
-                                }
-
-                                console.log("success");
-                                for (var i = 0; i < observancePatient.length; i++) {
-
-                                    var val = observancePatient[i]["valeur"];
-                                    var heuresMinutes = formatterObservance(val);
-                                    console.log(heuresMinutes);
-                                    observanceTab.push(observancePatient[i]["valeur"]);
-                                    observanceDate.push(observancePatient[i]["dateReleve"]);
-                                    observanceColor.push(observancePatient[i]["color"]);
-
-                                }
-
-                                console.log(observanceTab[0]);
-                                console.log(observanceDate[0]);
-                            },
-                            error: function (resultat, statut, erreur) {
-                                console.log(statut);
-                                console.log(erreur);
-                            },
-                        });
-                        totalResult.push(observanceTab);
-                        totalResult.push(observanceDate);
-                        totalResult.push(observanceColor);
-                        console.log(totalResult);
-                        return totalResult;
-
-                    }
-                    var myChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: loadObservanceData()[1],
-                                // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                                datasets: [{
-                                    label: 'Observance du patient',
-                                    data: loadObservanceData()[0],
-                                    backgroundColor: loadObservanceData()[2],
-                                    borderColor: 'rgba(0, 139, 0, 1)',
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                scales: {
-                                    xAxes: [{
-                                        type: 'time',
-                                        time: {
-                                            displayFormats: {
-                                                quarter: 'MMM D'
-                                            }
-                                        }
-                                    }],
-                                    yAxes: [{
-                                        // ticks: {
-                                        //     beginAtZero: true
-                                        // },
-                                        ticks: {
-                                            userCallback: function (item) {
-                                                return minutesToHours(item);
-                                            },
-                                        }
-
-
-
-                                    }],
-                                },
-                                tooltips: {
-                                    mode: 'index',
-                                    intersect: false
-                                },
-                                hover: {
-                                    mode: 'index',
-                                    intersect: false
-                                }
-                            }
-                        }
-                        )
-                    ;
-
-
-                </script>
                 <div class="grid">
                     <div class="grid2">
                         <div>
@@ -470,20 +348,20 @@
 
 
                 <!-- TEST d'affichage de plusieurs graphiques plutÃ´t qu'un seul pour voir ce que Ã§a donne. -->
-                <div class="grid demo-container">
-                    <div class="grid2">
-                        <div>
-                            <div id='graph0' style='height: 200px;'></div>
-                        </div>
-                        <div>
-                            <div id='graph1' style='height: 200px;'></div>
-                        </div>
-                        <div>
-                            <div id='graph2' style='height: 200px;'></div>
-                        </div>
-                    </div>
-                </div>
-                <span id="tooltip2"></span>
+                <!--<div class="grid demo-container">-->
+                    <!--<div class="grid2">-->
+                        <!--<div>-->
+                            <!--<div id='graph0' style='height: 200px;'></div>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                            <!--<div id='graph1' style='height: 200px;'></div>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                            <!--<div id='graph2' style='height: 200px;'></div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<span id="tooltip2"></span>-->
 
                 <!-- SCRIPT d'affichage des graphiques -->
 
@@ -541,24 +419,146 @@
 
 
                 <div style="height: 450px">
-                    <div id="graph-teleobs" class="demo-container"></div>
-                    <div id="graph-teleobs-tooltip"></div>
+                    <canvas id="myChart" class="chart-container" width="400" height="400"></canvas>
+                    <script>
+                        // ########################################################################
+                        // Méthode habituelle pour les charts js
+
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        function minutesToHours(minutes) {
+                            var hour = Math.floor(minutes / 60);
+                            minutes = minutes % 60;
+                            return ((hour < 10) ? "0"+hour : hour) + ":" + ((minutes < 10) ? "0"+minutes : minutes);
+                        }
+
+                        loadObservanceData : function loadObservanceData() {
+                            var totalResult = [];
+                            var observanceTab = [];
+                            var observanceDate = [];
+                            var observanceColor =[];
+                            var url = window.location.href;
+                            var idPatient = url.split("/").pop();
+                            console.log(idPatient);
+
+                            $.ajax({
+
+                                async: false,
+
+                                url: "../../observancePatient/" + idPatient,
+                                // url: "../../observancePatient",
+
+                                dataType: "json",
+
+                                success: function (observancePatient) {
+
+                                    function formatterObservance(val) {
+                                        var minutes = Math.round(val % 60);
+
+                                        if (minutes < 10)
+                                            minutes = "0" + minutes;
+
+                                        return Math.floor(val / 60) + "h" + minutes;
+                                    }
+
+                                    console.log("success");
+                                    for (var i = 0; i < observancePatient.length; i++) {
+
+                                        var val = observancePatient[i]["valeur"];
+                                        var heuresMinutes = formatterObservance(val);
+                                        console.log(heuresMinutes);
+                                        observanceTab.push(observancePatient[i]["valeur"]);
+                                        observanceDate.push(observancePatient[i]["dateReleve"]);
+                                        observanceColor.push(observancePatient[i]["color"]);
+
+                                    }
+
+                                    console.log(observanceTab[0]);
+                                    console.log(observanceDate[0]);
+                                },
+                                error: function (resultat, statut, erreur) {
+                                    console.log(statut);
+                                    console.log(erreur);
+                                },
+                            });
+                            totalResult.push(observanceTab);
+                            totalResult.push(observanceDate);
+                            totalResult.push(observanceColor);
+                            console.log(totalResult);
+                            return totalResult;
+
+                        }
+                        var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: loadObservanceData()[1],
+                                    // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                    datasets: [{
+                                        label: 'Observance du patient',
+                                        data: loadObservanceData()[0],
+                                        backgroundColor: loadObservanceData()[2],
+                                        borderColor: 'rgba(0, 139, 0, 1)',
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        xAxes: [{
+                                            type: 'time',
+                                            time: {
+                                                displayFormats: {
+                                                    quarter: 'MMM D'
+                                                }
+                                            }
+                                        }],
+                                        yAxes: [{
+                                            // ticks: {
+                                            //     beginAtZero: true
+                                            // },
+                                            ticks: {
+                                                userCallback: function (item) {
+                                                    return minutesToHours(item);
+                                                },
+                                            }
+
+
+
+                                        }],
+                                    },
+                                    tooltips: {
+                                        mode: 'index',
+                                        intersect: false
+                                    },
+                                    hover: {
+                                        mode: 'index',
+                                        intersect: false
+                                    }
+                                }
+                            }
+                            )
+                        ;
+
+
+                    </script>
+                    <!--<div id="graph-teleobs" class="demo-container"></div>-->
+                    <!--<div id="graph-teleobs-tooltip"></div>-->
 
                 </div>
-                <!-- GRAPH IAH -->
-                <h4>Index d'apnée hypopnée</h4>
-                <div style="height: 450px">
-                    <div id="graph-iah" class="demo-container"></div>
-                    <div id="graph-iah-tooltip"></div>
-                </div>
+                <!--&lt;!&ndash; GRAPH IAH &ndash;&gt;-->
+                <!--<h4>Index d'apnée hypopnée</h4>-->
+                <!--<div style="height: 450px">-->
+                    <!--<div id="graph-iah" class="demo-container"></div>-->
+                    <!--<div id="graph-iah-tooltip"></div>-->
+                <!--</div>-->
 
-                <!-- GRAPH FUITES -->
-                <h4>Fuites moyennes (l/m)</h4>
-                <div style="height: 450px">
-                    <div id="graph-fuites" class="demo-container"></div>
-                    <div id="graph-fuites-tooltip"></div>
+                <!--&lt;!&ndash; GRAPH FUITES &ndash;&gt;-->
+                <!--<h4>Fuites moyennes (l/m)</h4>-->
+                <!--<div style="height: 450px">-->
+                    <!--<div id="graph-fuites" class="demo-container"></div>-->
+                    <!--<div id="graph-fuites-tooltip"></div>-->
 
-                </div>
+                <!--</div>-->
             </div>
         </div>
     </div>

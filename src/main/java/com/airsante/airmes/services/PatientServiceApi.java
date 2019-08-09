@@ -28,22 +28,26 @@ public class PatientServiceApi {
 
     /**
      * Permet de récupérer un patient à l'aide de son ID
+     *
      * @param id
      * @param token
      * @return
      */
     public static Patient findById(long id, String token) {
-        RestTemplate restTemplate = new RestTemplate();
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> header = new HttpEntity<>(headers);
         String total = URL + "patient/" + id + "?projection=inlinePatient";
+
+        RestTemplate restTemplate = new RestTemplate();
         Patient patient = restTemplate.exchange(total, HttpMethod.GET, header, Patient.class).getBody();
+
         return patient;
     }
 
 
     /**
      * La méthode pour renvoyer une liste personnalisée de données patients/personnes/TO
+     *
      * @param id
      * @param token
      * @return

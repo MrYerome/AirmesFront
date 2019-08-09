@@ -1,13 +1,13 @@
 package com.airsante.airmes.controllers;
 
+import com.airsante.airmes.services.PatientServiceApi;
 import com.airsante.airmes.utils.Token;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.airsante.airmes.services.AdresseServiceApi;
-import com.airsante.airmes.services.PatientServiceApi;
-
-import javax.naming.Context;
 import javax.servlet.http.HttpSession;
 
 /**
